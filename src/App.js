@@ -1,7 +1,8 @@
 import React from "react";
+import ProblemsView from "./features/problems/ProblemsView";
 
 function App() {
-  return <div></div>;
+  return <ProblemsView />;
 }
 
 export default App;
