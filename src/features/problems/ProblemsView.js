@@ -2,26 +2,15 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./problemsView.css";
 
-const ProblemsView = () => {
-  const [problemsArray, setProblemsArray] = useState([
-    { operand1: 8, operand2: 7, operation: "+" },
-  ]);
-
-  const operations = ["+"];
-  const operand1Constraints = {
-    min: 0,
-    max: 10,
-  };
-  const operand2Constraints = {
-    min: 0,
-    max: 10,
-  };
-  const resultConstraints = {
-    min: undefined,
-    max: undefined,
-  };
-  const numberOfProblems = 30;
-  const shuffle = false;
+const ProblemsView = (props) => {
+  const {
+    operations,
+    operand1Constraints,
+    operand2Constraints,
+    resultConstraints,
+    numberOfProblems,
+    shuffle,
+  } = props.state;
 
   const getRandomInt = (min, max) => {
     min = Math.ceil(min);
@@ -29,7 +18,7 @@ const ProblemsView = () => {
     return Math.floor(Math.random() * (max - min) + min);
   };
 
-  // write map or loop that generates problems from dummy state vars above.
+  // generate array of problem objects
   const allProblems = [];
   for (let probNum = 0; probNum < numberOfProblems; probNum++) {
     allProblems.push({
@@ -38,12 +27,14 @@ const ProblemsView = () => {
       operation: operations[getRandomInt(0, operations.length)],
     });
   }
+
+  // generate JSX from allProblems array.
   const numProblems = allProblems.length;
   const numRows = Math.ceil(numProblems / 6);
   let allProblemsJSX = [];
   for (let currRow = 0; currRow < numRows; currRow++) {
     allProblemsJSX.push(
-      <div className="row my-4">
+      <div className="row my-4" key={Math.random()}>
         {allProblems.slice(currRow * 6, currRow * 6 + 6).map((problem) => {
           return (
             <div className="col-2" key={Math.random()}>
