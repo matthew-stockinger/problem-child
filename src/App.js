@@ -3,8 +3,9 @@ import ProblemsView from "./features/problems/ProblemsView";
 import ControlPanel from "./features/controlPanel/ControlPanel";
 
 function App() {
-  const problemsViewProps = {
-    operations: ["+"],
+  const [operations, setOperations] = React.useState(["+"]);
+  const stateProps = {
+    operations: operations,
     operand1Constraints: {
       min: 0,
       max: 10,
@@ -23,8 +24,8 @@ function App() {
 
   return (
     <div className="container pt-4">
-      <ControlPanel />
-      <ProblemsView state={problemsViewProps} />
+      <ControlPanel state={stateProps} />
+      <ProblemsView state={stateProps} />
     </div>
   );
 }
