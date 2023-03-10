@@ -52,7 +52,7 @@ const ProblemsView = (props) => {
     );
   }
 
-  return <div className="container">{allProblemsJSX}</div>;
+  return <div>{allProblemsJSX}</div>;
 };
 
 export default ProblemsView;

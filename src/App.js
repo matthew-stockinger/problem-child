@@ -1,5 +1,6 @@
 import React from "react";
 import ProblemsView from "./features/problems/ProblemsView";
+import ControlPanel from "./features/controlPanel/ControlPanel";
 
 function App() {
   const problemsViewProps = {
@@ -20,7 +21,12 @@ function App() {
     shuffle: false,
   };
 
-  return <ProblemsView state={problemsViewProps} />;
+  return (
+    <div className="container pt-4">
+      <ControlPanel />
+      <ProblemsView state={problemsViewProps} />
+    </div>
+  );
 }
 
 export default App;
