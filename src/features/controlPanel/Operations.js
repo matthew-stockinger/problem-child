@@ -12,7 +12,7 @@ const Operations = ({ operations }) => {
   ];
 
   return (
-    <div className="card">
+    <div className="card mx-2">
       <div className="card-body">
         <span
           className={

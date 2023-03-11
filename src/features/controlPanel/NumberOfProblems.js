@@ -3,9 +3,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const NumberOfProblems = ({ numberOfProblems }) => {
   return (
-    <div className="card mx-3">
+    <div className="card mx-2">
       <div className="card-body">
-        <label for="numberOfProblemsInput" className="form-label">
+        <label htmlFor="numberOfProblemsInput" className="form-label">
           Number of Problems:
           <input
             id="numberOfProblemsInput"
