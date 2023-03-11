@@ -25,7 +25,7 @@ const DATAMODEL = {
     min: undefined,
     max: undefined,
   },
-  shuffle: true,
+  shuffle: false,
   instructionsVisible: false,
 };
 

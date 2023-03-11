@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Operations from "./Operations";
 import NumberOfProblems from "./NumberOfProblems";
 import Constraints from "./Constraints";
+import Shuffle from "./Shuffle";
 
 const ControlPanel = ({ state }) => {
   return (
@@ -16,6 +17,7 @@ const ControlPanel = ({ state }) => {
             operandConstraints={state.operandConstraints}
             resultConstraints={state.resultConstraints}
           />
+          <Shuffle shuffle={state.shuffle} />
         </div>
       </div>
     </div>
