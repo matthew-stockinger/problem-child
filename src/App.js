@@ -13,7 +13,7 @@ const ProblemChild = ({ state }) => {
 };
 
 const DATAMODEL = {
-  operations: ["+", "-"],
+  operations: ["+", "-"], // must be characters +, -, *, or /
   numberOfProblems: 30,
   operandConstraints: {
     min1: 0,
