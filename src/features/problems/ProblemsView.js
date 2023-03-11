@@ -13,15 +13,39 @@ const Problem = ({ state }) => {
   const evaluateProblem = ({ operand1, operand2, operation }) => {
     switch (operation) {
       case "+":
+      case "&plus;":
         return operand1 + operand2;
       case "-":
+      case "&minus;":
         return operand1 - operand2;
+      case "x":
+      case "&times;":
       case "*":
         return operand1 * operand2;
       case "/":
+      case "&divide;":
         return operand1 / operand2;
       default:
         throw new Error("runtime error: invalid operation string.");
+    }
+  };
+
+  const operationToStringFromCodePoint = (operation) => {
+    switch (operation) {
+      case "+":
+      case "&plus;":
+        return String.fromCodePoint(0x0002b);
+      case "-":
+      case "&minus;":
+        return String.fromCodePoint(0x2212);
+      case "x":
+      case "&times;":
+      case "*":
+        return String.fromCodePoint(0x000d7);
+      case "/":
+      case "&divide;":
+        return String.fromCodePoint(0x000f7);
+      default:
     }
   };
 
@@ -59,12 +83,14 @@ const Problem = ({ state }) => {
     (result < resultMin || result > resultMax)
   );
 
+  const operationChar = operationToStringFromCodePoint(operation);
+
   return (
     <div className="col-md-2">
       <div className="problemBox">
         <p className="h3 text-end">{operand1}</p>
         <p className="h3 text-end">
-          {operation} {operand2}
+          {operationChar} {operand2}
         </p>
         <hr />
       </div>

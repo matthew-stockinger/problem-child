@@ -13,7 +13,7 @@ const ProblemChild = ({ state }) => {
 };
 
 const DATAMODEL = {
-  operations: ["+"],
+  operations: ["+", "-"],
   numberOfProblems: 30,
   operandConstraints: {
     min1: 0,

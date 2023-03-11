@@ -8,7 +8,7 @@ const ControlPanel = ({ state }) => {
       <div className="card-header">Problems Setup</div>
       <div className="card-body">
         <div className="d-flex">
-          <Operations state={state.operations} />
+          <Operations operations={state.operations} />
         </div>
       </div>
     </div>

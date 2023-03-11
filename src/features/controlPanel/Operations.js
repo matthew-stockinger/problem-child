@@ -1,33 +1,50 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BsPlusCircleFill } from "react-icons/bs";
-import { IconContext } from "react-icons";
+import "./operations.css";
 
-// Needs work:  should take operations and render appropriate icons
-
+// TODO: render colors depending on items present in operations.
 const Operations = ({ operations }) => {
+  const [hasPlus, hasMinus, hasTimes, hasDivide] = [
+    operations.includes("+"),
+    operations.includes("-"),
+    operations.includes("*"),
+    operations.includes("/"),
+  ];
+
   return (
     <div className="card">
       <div className="card-body">
-        <span className="pe-1">
-          <IconContext.Provider value={{ size: "2rem", color: "green" }}>
-            <BsPlusCircleFill />
-          </IconContext.Provider>
+        <span
+          className={
+            "operation-icon mx-1 text-light" +
+            (hasPlus ? " bg-success" : " bg-secondary")
+          }
+        >
+          {String.fromCodePoint(0x0002b)} {/* &plus; */}
         </span>
-        <span className="px-1">
-          <IconContext.Provider value={{ size: "2rem", color: "green" }}>
-            <BsPlusCircleFill />
-          </IconContext.Provider>
+        <span
+          className={
+            "operation-icon mx-1 text-light" +
+            (hasMinus ? " bg-success" : " bg-secondary")
+          }
+        >
+          {String.fromCodePoint(0x2212)} {/* &minus; */}
         </span>
-        <span className="px-1">
-          <IconContext.Provider value={{ size: "2rem", color: "green" }}>
-            <BsPlusCircleFill />
-          </IconContext.Provider>
+        <span
+          className={
+            "operation-icon mx-1 text-light" +
+            (hasTimes ? " bg-success" : " bg-secondary")
+          }
+        >
+          {String.fromCodePoint(0x000d7)} {/* &times; */}
         </span>
-        <span className="ps-1">
-          <IconContext.Provider value={{ size: "2rem", color: "green" }}>
-            <BsPlusCircleFill />
-          </IconContext.Provider>
+        <span
+          className={
+            "operation-icon mx-1 text-light" +
+            (hasDivide ? " bg-success" : " bg-secondary")
+          }
+        >
+          {String.fromCodePoint(0x000f7)} {/* &divide; */}
         </span>
       </div>
     </div>
