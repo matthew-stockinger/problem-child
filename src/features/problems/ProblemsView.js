@@ -2,59 +2,90 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./problemsView.css";
 
-// restructure this to have a <Problem /> child component.
-// use the {children} thing to achieve this.
-
-const ProblemsView = ({ state }) => {
-  const {
-    operations,
-    operandConstraints,
-    resultConstraints,
-    numberOfProblems,
-    shuffle,
-  } = state;
-
-  const getRandomInt = (min, max) => {
+const Problem = ({ state }) => {
+  // utility functions for generating the Problem
+  const getRandomIntInclusive = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min) + min);
+    return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
-  // generate array of problem objects
-  const allProblems = [];
-  for (let probNum = 0; probNum < numberOfProblems; probNum++) {
-    allProblems.push({
-      operand1: getRandomInt(operandConstraints.min1, operandConstraints.max1),
-      operand2: getRandomInt(operandConstraints.min2, operandConstraints.max2),
-      operation: operations[getRandomInt(0, operations.length)],
+  const evaluateProblem = ({ operand1, operand2, operation }) => {
+    switch (operation) {
+      case "+":
+        return operand1 + operand2;
+      case "-":
+        return operand1 - operand2;
+      case "*":
+        return operand1 * operand2;
+      case "/":
+        return operand1 / operand2;
+      default:
+        throw new Error("runtime error: invalid operation string.");
+    }
+  };
+
+  // generate operands according to constraints.
+  const [
+    resultMin,
+    resultMax,
+    operand1Min,
+    operand1Max,
+    operand2Min,
+    operand2Max,
+    operations,
+  ] = [
+    state.resultConstraints.min,
+    state.resultConstraints.max,
+    state.operandConstraints.min1,
+    state.operandConstraints.max1,
+    state.operandConstraints.min2,
+    state.operandConstraints.max2,
+    state.operations,
+  ];
+
+  do {
+    var operand1 = getRandomIntInclusive(operand1Min, operand1Max);
+    var operand2 = getRandomIntInclusive(operand2Min, operand2Max);
+    var operation = operations[getRandomIntInclusive(0, operations.length - 1)];
+    var result = evaluateProblem({
+      operand1: operand1,
+      operand2: operand2,
+      operation: operation,
     });
-  }
+  } while (
+    resultMin &&
+    resultMax &&
+    (result < resultMin || result > resultMax)
+  );
 
-  // generate JSX from allProblems array.
-  const numProblems = allProblems.length;
-  const numRows = Math.ceil(numProblems / 6);
-  let allProblemsJSX = [];
-  for (let currRow = 0; currRow < numRows; currRow++) {
-    allProblemsJSX.push(
-      <div className="row my-4" key={Math.random()}>
-        {allProblems.slice(currRow * 6, currRow * 6 + 6).map((problem) => {
-          return (
-            <div className="col-2" key={Math.random()}>
-              <div className="problemBox">
-                <p className="h3 text-end">{problem.operand1}</p>
-                <p className="h3 text-end">
-                  {problem.operation} {problem.operand2}
-                </p>
-                <hr />
-              </div>
-            </div>
-          );
-        })}
+  return (
+    <div className="col-md-2">
+      <div className="problemBox">
+        <p className="h3 text-end">{operand1}</p>
+        <p className="h3 text-end">
+          {operation} {operand2}
+        </p>
+        <hr />
       </div>
-    );
-  }
+    </div>
+  );
+};
 
-  return <div>{allProblemsJSX}</div>;
+const ProblemsRow = ({ state }) => {
+  // hard-coded setting: 6 problems per row.
+  const problemComponents = Array(6)
+    .fill(undefined)
+    .map((elt, index) => <Problem key={index} state={state} />);
+  return <div className="row my-4">{problemComponents}</div>;
+};
+
+const ProblemsView = ({ state }) => {
+  const numRows = Math.ceil(state.numberOfProblems / 6);
+  const rowComponents = Array(numRows)
+    .fill(undefined)
+    .map((elt, index) => <ProblemsRow key={index} state={state} />);
+  return <div>{rowComponents}</div>;
 };
 
 export default ProblemsView;
