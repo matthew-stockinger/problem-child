@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./problemsView.css";
 
-const ProblemsView = (props) => {
+// restructure this to have a <Problem /> child component.
+// use the {children} thing to achieve this.
+
+const ProblemsView = ({ state }) => {
   const {
     operations,
-    operand1Constraints,
-    operand2Constraints,
+    operandConstraints,
     resultConstraints,
     numberOfProblems,
     shuffle,
-  } = props.state;
+  } = state;
 
   const getRandomInt = (min, max) => {
     min = Math.ceil(min);
@@ -22,8 +24,8 @@ const ProblemsView = (props) => {
   const allProblems = [];
   for (let probNum = 0; probNum < numberOfProblems; probNum++) {
     allProblems.push({
-      operand1: getRandomInt(operand1Constraints.min, operand1Constraints.max),
-      operand2: getRandomInt(operand2Constraints.min, operand2Constraints.max),
+      operand1: getRandomInt(operandConstraints.min1, operandConstraints.max1),
+      operand2: getRandomInt(operandConstraints.min2, operandConstraints.max2),
       operation: operations[getRandomInt(0, operations.length)],
     });
   }

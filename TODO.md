@@ -1,0 +1,3 @@
+- building static site.
+  - ProblemsView and Operations both have notes in them.
+- next steps: https://beta.reactjs.org/learn/thinking-in-react

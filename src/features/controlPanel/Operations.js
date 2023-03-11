@@ -3,8 +3,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { IconContext } from "react-icons";
 
-const Operations = (props) => {
-  const operations = props.state;
+// Needs work:  should take operations and render appropriate icons
+
+const Operations = ({ operations }) => {
   return (
     <div className="card">
       <div className="card-body">
