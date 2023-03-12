@@ -100,17 +100,23 @@ const Problem = ({ state }) => {
 
 const ProblemsRow = ({ state }) => {
   // hard-coded setting: 6 problems per row.
-  const problemComponents = Array(6)
+  const problemIDs = Array(6)
     .fill(undefined)
-    .map((elt, index) => <Problem key={index} state={state} />);
+    .map((elt) => crypto.randomUUID());
+  const problemComponents = problemIDs.map((problemID) => (
+    <Problem key={problemID} state={state} />
+  ));
   return <div className="row my-4">{problemComponents}</div>;
 };
 
 const ProblemsView = ({ state }) => {
   const numRows = Math.ceil(state.numberOfProblems / 6);
-  const rowComponents = Array(numRows)
+  const rowIDs = Array(numRows)
     .fill(undefined)
-    .map((elt, index) => <ProblemsRow key={index} state={state} />);
+    .map((elt) => crypto.randomUUID());
+  const rowComponents = rowIDs.map((rowID) => (
+    <ProblemsRow key={rowID} state={state} />
+  ));
   return <div>{rowComponents}</div>;
 };
 
