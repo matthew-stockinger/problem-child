@@ -8,16 +8,24 @@ import Shuffle from "./Shuffle";
 const ControlPanel = ({ state }) => {
   return (
     <div className="card">
-      <div className="card-header">Problems Setup</div>
+      <div className="card-header text-center">Problems Setup</div>
       <div className="card-body">
-        <div className="d-flex flex-wrap align-items-start">
-          <Operations operations={state.operations} />
-          <NumberOfProblems numberOfProblems={state.numberOfProblems} />
-          <Constraints
-            operandConstraints={state.operandConstraints}
-            resultConstraints={state.resultConstraints}
-          />
-          <Shuffle shuffle={state.shuffle} />
+        <div className="row justify-content-center">
+          <div className="col-md-3">
+            <Operations operations={state.operations} />
+            <div className="mt-2">
+              <NumberOfProblems numberOfProblems={state.numberOfProblems} />
+            </div>
+            <div className="mt-2">
+              <Shuffle shuffle={state.shuffle} />
+            </div>
+          </div>
+          <div className="col-md-auto">
+            <Constraints
+              operandConstraints={state.operandConstraints}
+              resultConstraints={state.resultConstraints}
+            />
+          </div>
         </div>
       </div>
     </div>
