@@ -78,8 +78,8 @@ const Problem = ({ state }) => {
       operation: operation,
     });
   } while (
-    resultMin &&
-    resultMax &&
+    resultMin !== undefined &&
+    resultMax !== undefined &&
     (result < resultMin || result > resultMax)
   );
 
