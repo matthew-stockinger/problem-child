@@ -49,6 +49,14 @@ const Problem = ({ state }) => {
     }
   };
 
+  const getShuffledOperandsArray = ([operand1, operand2]) => {
+    if (Math.random() < 0.5) {
+      return [operand1, operand2];
+    } else {
+      return [operand2, operand1];
+    }
+  };
+
   // generate operands according to constraints.
   const [
     resultMin,
@@ -58,6 +66,7 @@ const Problem = ({ state }) => {
     operand2Min,
     operand2Max,
     operations,
+    shuffle,
   ] = [
     state.resultConstraints.min,
     state.resultConstraints.max,
@@ -66,6 +75,7 @@ const Problem = ({ state }) => {
     state.operandConstraints.min2,
     state.operandConstraints.max2,
     state.operations,
+    state.shuffle,
   ];
 
   do {
@@ -84,6 +94,10 @@ const Problem = ({ state }) => {
   );
 
   const operationChar = operationToStringFromCodePoint(operation);
+
+  if (shuffle === true) {
+    [operand1, operand2] = getShuffledOperandsArray([operand1, operand2]);
+  }
 
   return (
     <div className="col-md-2">
