@@ -3,7 +3,7 @@ import ProblemsView from "./features/problems/ProblemsView";
 import ControlPanel from "./features/controlPanel/ControlPanel";
 
 const ProblemChild = () => {
-  const [operations, setOperations] = React.useState(["-", "+"]);
+  const [operations, setOperations] = React.useState(["-", "+", "*"]);
   const [numberOfProblems, setNumberOfProblems] = React.useState(18);
   const [operandConstraints, setOperandConstraints] = React.useState({
     min1: 10,
@@ -12,8 +12,8 @@ const ProblemChild = () => {
     max2: 9,
   });
   const [resultConstraints, setResultConstraints] = React.useState({
-    min: -5,
-    max: 8,
+    min: undefined,
+    max: undefined,
   });
   const [shuffle, setShuffle] = React.useState(false);
 
