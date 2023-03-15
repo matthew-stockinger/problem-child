@@ -1,7 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Shuffle = ({ shuffle }) => {
+const Shuffle = ({ shuffle, setShuffle }) => {
   return (
     <div className="form-check">
       <input
@@ -11,6 +11,7 @@ const Shuffle = ({ shuffle }) => {
         className="form-check-input"
         value="shuffle"
         checked={shuffle}
+        onChange={() => setShuffle(!shuffle)}
       />
       <label htmlFor="shuffleCheckbox" className="form-check-label">
         Randomize operands?
