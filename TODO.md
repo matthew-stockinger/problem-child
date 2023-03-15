@@ -1,4 +1,2 @@
-- next steps: https://beta.reactjs.org/learn/thinking-in-react
-
-- result constraints aren't working.
-- shuffle doesn't work as intended.
+- add validation to number of problems input.
+- add event handlers to other control panel components.

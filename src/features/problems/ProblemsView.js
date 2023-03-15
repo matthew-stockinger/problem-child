@@ -57,7 +57,7 @@ const Problem = ({ state }) => {
     }
   };
 
-  // generate operands according to constraints.
+  // constraints.
   const [
     resultMin,
     resultMax,
@@ -78,6 +78,7 @@ const Problem = ({ state }) => {
     state.shuffle,
   ];
 
+  // generate operation and operands
   do {
     var operand1 = getRandomIntInclusive(operand1Min, operand1Max);
     var operand2 = getRandomIntInclusive(operand2Min, operand2Max);
@@ -113,7 +114,7 @@ const Problem = ({ state }) => {
 };
 
 const ProblemsRow = ({ state }) => {
-  // hard-coded setting: 6 problems per row.
+  // always 6 problems per row.
   const problemIDs = Array(6)
     .fill(undefined)
     .map((elt) => crypto.randomUUID());
@@ -128,7 +129,7 @@ const ProblemsView = ({ state }) => {
   const rowIDs = Array(numRows)
     .fill(undefined)
     .map((elt) => crypto.randomUUID());
-  const rowComponents = rowIDs.map((rowID) => (
+  const rowComponents = rowIDs.map((rowID, index) => (
     <ProblemsRow key={rowID} state={state} />
   ));
   return <div>{rowComponents}</div>;

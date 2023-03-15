@@ -4,7 +4,7 @@ import ControlPanel from "./features/controlPanel/ControlPanel";
 
 const ProblemChild = () => {
   const [operations, setOperations] = React.useState(["-", "+", "*"]);
-  const [numberOfProblems, setNumberOfProblems] = React.useState(18);
+  const [numberOfProblems, setNumberOfProblems] = React.useState(24);
   const [operandConstraints, setOperandConstraints] = React.useState({
     min1: 10,
     max1: 20,
@@ -25,9 +25,17 @@ const ProblemChild = () => {
     shuffle,
   };
 
+  const stateSetters = {
+    setOperations,
+    setNumberOfProblems,
+    setOperandConstraints,
+    setResultConstraints,
+    setShuffle,
+  };
+
   return (
     <div className="container pt-4">
-      <ControlPanel state={state} />
+      <ControlPanel state={state} stateSetters={stateSetters} />
       <ProblemsView state={state} />
       {/* <Instructions /> */}
     </div>
