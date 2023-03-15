@@ -1,2 +1,3 @@
-- add validation to number of problems input.
-- add event handlers to other control panel components.
+- put conditional rendering into ProblemsView, so that if any constraints are empty, nothing gets rendered.
+- event handlers needed in
+  - Operations

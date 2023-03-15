@@ -1,7 +1,12 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Constraints = ({ operandConstraints, resultConstraints }) => {
+const Constraints = ({
+  operandConstraints,
+  setOperandConstraints,
+  resultConstraints,
+  setResultConstraints,
+}) => {
   return (
     <>
       <div>
@@ -14,6 +19,12 @@ const Constraints = ({ operandConstraints, resultConstraints }) => {
             className="form-control"
             value={operandConstraints.min1}
             step="1"
+            onChange={(e) =>
+              setOperandConstraints({
+                ...operandConstraints,
+                min1: parseInt(e.target.value),
+              })
+            }
           />
         </label>
         <label htmlFor="operand1MaxInput" className="form-label">
