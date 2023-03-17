@@ -210,96 +210,108 @@ const Constraints = ({
   };
 
   return (
-    <>
-      <div>
-        <label htmlFor="operand1MinInput" className="form-label mt-3 mt-md-0">
-          Operand 1 minimum:
-          <input
-            id="operand1MinInput"
-            name="operand1MinInput"
-            ref={operand1MinInput}
-            type="number"
-            className="form-control"
-            defaultValue={operandConstraints.min1}
-            step="1"
-            onBlur={handleOperand1MinChange}
-            required
-          />
-        </label>
-        <label htmlFor="operand1MaxInput" className="form-label">
-          Operand 1 maximum:
-          <input
-            id="operand1MaxInput"
-            name="operand1MaxInput"
-            ref={operand1MaxInput}
-            type="number"
-            className="form-control"
-            defaultValue={operandConstraints.max1}
-            step="1"
-            onBlur={handleOperand1MaxChange}
-            required
-          />
-        </label>
+    <fieldset>
+      <div className="row g-3">
+        <div className="col">
+          <label htmlFor="operand1MinInput" className="form-label">
+            Operand 1 minimum:
+            <input
+              id="operand1MinInput"
+              name="operand1MinInput"
+              ref={operand1MinInput}
+              type="number"
+              className="form-control"
+              defaultValue={operandConstraints.min1}
+              step="1"
+              onBlur={handleOperand1MinChange}
+              required
+            />
+          </label>
+        </div>
+        <div className="col">
+          <label htmlFor="operand1MaxInput" className="form-label">
+            Operand 1 maximum:
+            <input
+              id="operand1MaxInput"
+              name="operand1MaxInput"
+              ref={operand1MaxInput}
+              type="number"
+              className="form-control"
+              defaultValue={operandConstraints.max1}
+              step="1"
+              onBlur={handleOperand1MaxChange}
+              required
+            />
+          </label>
+        </div>
       </div>
-      <div>
-        <label htmlFor="operand2MinInput" className="form-label">
-          Operand 2 minimum:
-          <input
-            id="operand2MinInput"
-            name="operand2MinInput"
-            ref={operand2MinInput}
-            type="number"
-            className="form-control"
-            defaultValue={operandConstraints.min2}
-            step="1"
-            onBlur={handleOperand2MinChange}
-            required
-          />
-        </label>
-        <label htmlFor="operand2MaxInput" className="form-label">
-          Operand 2 maximum:
-          <input
-            id="operand2MaxInput"
-            name="operand2MaxInput"
-            ref={operand2MaxInput}
-            type="number"
-            className="form-control"
-            defaultValue={operandConstraints.max2}
-            step="1"
-            onBlur={handleOperand2MaxChange}
-            required
-          />
-        </label>
+      <div className="row g-3">
+        <div className="col">
+          <label htmlFor="operand2MinInput" className="form-label">
+            Operand 2 minimum:
+            <input
+              id="operand2MinInput"
+              name="operand2MinInput"
+              ref={operand2MinInput}
+              type="number"
+              className="form-control"
+              defaultValue={operandConstraints.min2}
+              step="1"
+              onBlur={handleOperand2MinChange}
+              required
+            />
+          </label>
+        </div>
+        <div className="col">
+          <label htmlFor="operand2MaxInput" className="form-label">
+            Operand 2 maximum:
+            <input
+              id="operand2MaxInput"
+              name="operand2MaxInput"
+              ref={operand2MaxInput}
+              type="number"
+              className="form-control"
+              defaultValue={operandConstraints.max2}
+              step="1"
+              onBlur={handleOperand2MaxChange}
+              required
+            />
+          </label>
+        </div>
       </div>
-      <div>
-        <label htmlFor="resultMinInput" className="form-label">
-          Minimum result (optional):
-          <input
-            id="resultMinInput"
-            name="resultMinInput"
-            ref={resultMinInput}
-            type="number"
-            className="form-control"
-            defaultValue={resultConstraints.min}
-            step="1"
-            onBlur={handleResultMinChange}
-          />
-        </label>
-        <label htmlFor="resultMaxInput" className="form-label">
-          Maximum result (optional):
-          <input
-            id="resultMaxInput"
-            name="resultMaxInput"
-            ref={resultMaxInput}
-            type="number"
-            className="form-control"
-            defaultValue={resultConstraints.max}
-            step="1"
-            onBlur={handleResultMaxChange}
-          />
-        </label>
+      <div className="row g-3">
+        <div className="col">
+          <label htmlFor="resultMinInput" className="form-label">
+            Minimum result (optional):
+            <input
+              id="resultMinInput"
+              name="resultMinInput"
+              ref={resultMinInput}
+              type="number"
+              className="form-control"
+              defaultValue={resultConstraints.min}
+              step="1"
+              onBlur={handleResultMinChange}
+            />
+          </label>
+        </div>
+        <div className="col">
+          <label htmlFor="resultMaxInput" className="form-label">
+            Maximum result (optional):
+            <input
+              id="resultMaxInput"
+              name="resultMaxInput"
+              ref={resultMaxInput}
+              type="number"
+              className="form-control"
+              defaultValue={resultConstraints.max}
+              step="1"
+              onBlur={handleResultMaxChange}
+            />
+          </label>
+        </div>
       </div>
-    </>
+    </fieldset>
   );
 };
 
