@@ -6,9 +6,28 @@ import Constraints from "./Constraints";
 import Shuffle from "./Shuffle";
 
 const ControlPanel = ({ state, stateSetters }) => {
+  const {
+    setOperations,
+    setNumberOfProblems,
+    setOperandConstraints,
+    setResultConstraints,
+    setShuffle,
+  } = stateSetters;
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`form submitted`);
+    const formdata = new FormData(e.target);
+    setNumberOfProblems(parseInt(formdata.get("numberOfProblemsInput")));
+    setShuffle(formdata.get("shuffleCheckbox") === "shuffle" ? true : false);
+
+    // TODO: update Constraints to be uncontrolled inputs.
+    // TODO: add setter calls for Constraints.
+
+    // for (const key of formdata.keys()) {
+    //   console.log(key);
+    // }
+    // for (const value of formdata.values()) {
+    //   console.log(typeof value);
+    // }
   };
 
   return (
@@ -24,25 +43,16 @@ const ControlPanel = ({ state, stateSetters }) => {
                 />
               </div>
               <div className="mb-1">
-                <NumberOfProblems
-                  numberOfProblems={state.numberOfProblems}
-                  // setNumberOfProblems={stateSetters.setNumberOfProblems}
-                />
+                <NumberOfProblems numberOfProblems={state.numberOfProblems} />
               </div>
               <div className="mb-3">
-                <Shuffle
-                  shuffle={state.shuffle}
-                  setShuffle={stateSetters.setShuffle}
-                />
+                <Shuffle />
               </div>
             </div>
             <div className="col-md-auto">
               <Constraints
                 operandConstraints={state.operandConstraints}
                 resultConstraints={state.resultConstraints}
-                setOperandConstraints={stateSetters.setOperandConstraints}
-                setResultConstraints={stateSetters.setResultConstraints}
-                operations={state.operations}
               />
               <button type="submit" className="btn btn-primary">
                 Submit

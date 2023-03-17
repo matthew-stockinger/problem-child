@@ -15,9 +15,6 @@ const NumberOfProblems = ({ numberOfProblems }) => {
         min="6"
         max="60"
         required
-        // onChange={(e) => {
-        //   setNumberOfProblems(parseInt(e.target.value));
-        // }}
       />
     </label>
   );
