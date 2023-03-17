@@ -26,7 +26,7 @@ const ControlPanel = ({ state, stateSetters }) => {
               <div className="mb-1">
                 <NumberOfProblems
                   numberOfProblems={state.numberOfProblems}
-                  setNumberOfProblems={stateSetters.setNumberOfProblems}
+                  // setNumberOfProblems={stateSetters.setNumberOfProblems}
                 />
               </div>
               <div className="mb-3">
