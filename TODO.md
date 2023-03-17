@@ -1,3 +1,8 @@
-- put conditional rendering into ProblemsView, so that if any constraints are empty, nothing gets rendered.
+- refactor the whole thing to use a form and submit button. Add bootstrap stuff?
+- result constraints could create infinite loops in problem creation?
+  - resultMin must not be greater than highest possible
+  - resultMax must not be less than lowest possible.
+  - currently not working. Check if highestPossibleResult and lowestPossibleResult functions are working as expected.
+- problems might show division by 0?
 - event handlers needed in
   - Operations

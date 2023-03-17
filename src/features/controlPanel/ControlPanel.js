@@ -8,7 +8,6 @@ import Shuffle from "./Shuffle";
 const ControlPanel = ({ state, stateSetters }) => {
   return (
     <div className="card">
-      <div className="card-header text-center">Problems Setup</div>
       <div className="card-body">
         <div className="row justify-content-center">
           <div className="col-md-3">
@@ -35,6 +34,7 @@ const ControlPanel = ({ state, stateSetters }) => {
               resultConstraints={state.resultConstraints}
               setOperandConstraints={stateSetters.setOperandConstraints}
               setResultConstraints={stateSetters.setResultConstraints}
+              operations={state.operations}
             />
           </div>
         </div>

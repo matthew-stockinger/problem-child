@@ -89,9 +89,8 @@ const Problem = ({ state }) => {
       operation: operation,
     });
   } while (
-    resultMin !== undefined &&
-    resultMax !== undefined &&
-    (result < resultMin || result > resultMax)
+    (resultMin !== undefined && result < resultMin) ||
+    (resultMax !== undefined && result > resultMax)
   );
 
   const operationChar = operationToStringFromCodePoint(operation);
@@ -125,9 +124,6 @@ const ProblemsRow = ({ state }) => {
 };
 
 const ProblemsView = ({ state }) => {
-  // check that constraints are not empty.
-  // if not empty, then render.
-  // otherwise, render nothing.
   const numRows = Math.ceil(state.numberOfProblems / 6);
   const rowIDs = Array(numRows)
     .fill(undefined)

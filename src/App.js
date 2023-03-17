@@ -7,7 +7,7 @@ const ProblemChild = () => {
   const [numberOfProblems, setNumberOfProblems] = React.useState(24);
   const [operandConstraints, setOperandConstraints] = React.useState({
     min1: 10,
-    max1: 20,
+    max1: 19,
     min2: 0,
     max2: 9,
   });
