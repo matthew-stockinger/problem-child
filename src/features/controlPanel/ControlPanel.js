@@ -13,12 +13,37 @@ const ControlPanel = ({ state, stateSetters }) => {
     setResultConstraints,
     setShuffle,
   } = stateSetters;
+
+  const whichConstraintsAreInvalid = () => {
+    // return a list of constraints (string names) that are invalid.
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formdata = new FormData(e.target);
-    setNumberOfProblems(parseInt(formdata.get("numberOfProblemsInput")));
-    setShuffle(formdata.get("shuffleCheckbox") === "shuffle" ? true : false);
+    const form = e.target;
+    // console.log("e.target = ");
+    // console.log(e.target);
+    const formdata = new FormData(form);
+    // console.log("formdata = ");
+    // console.log(formdata);
+    console.log(
+      `formdata.get("numberOfProblemsInput") = ${formdata.get(
+        "numberOfProblemsInput"
+      )}`
+    );
+    if (parseInt(formdata.get("numberOfProblemsInput")) < 15) {
+      console.log("inside < 15");
+      form
+        .querySelector("#numberOfProblemsInput")
+        .setCustomValidity("less than 15");
+      form.querySelector("#numberOfProblemsInput").reportValidity();
+    } else {
+      console.log("else");
+      form.querySelector("#numberOfProblemsInput").setCustomValidity("");
+      setNumberOfProblems(parseInt(formdata.get("numberOfProblemsInput")));
+    }
 
+    setShuffle(formdata.get("shuffleCheckbox") === "shuffle" ? true : false);
     // TODO: update Constraints to be uncontrolled inputs.
     // TODO: add setter calls for Constraints.
 
