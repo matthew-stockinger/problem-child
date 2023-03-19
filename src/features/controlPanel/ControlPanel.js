@@ -4,6 +4,7 @@ import Operations from "./Operations";
 import NumberOfProblems from "./NumberOfProblems";
 import Constraints from "./Constraints";
 import Shuffle from "./Shuffle";
+import * as Validation from "../validation/validation";
 
 const ControlPanel = ({ state, stateSetters }) => {
   const {
@@ -14,21 +15,22 @@ const ControlPanel = ({ state, stateSetters }) => {
     setShuffle,
   } = stateSetters;
 
+  const submitToState = (formdata) => {
+    // TODO: finish all state submissions.
+    const numProbsValue = parseInt(formdata.get("numberOfProblemsInput"));
+    setNumberOfProblems(numProbsValue);
+
+    setShuffle(formdata.get("shuffleCheckbox") === "shuffle" ? true : false);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const formdata = new FormData(form);
-    const numProbsValue = parseInt(formdata.get("numberOfProblemsInput"));
-    const numProbsInputElt = form.querySelector("#numberOfProblemsInput");
-    if (numProbsValue < 15) {
-      numProbsInputElt.setCustomValidity("custom validity: less than 15");
-    } else {
-      numProbsInputElt.setCustomValidity("");
-      setNumberOfProblems(numProbsValue);
-    }
 
-    setShuffle(formdata.get("shuffleCheckbox") === "shuffle" ? true : false);
-    // TODO: add setter calls for Constraints.
+    if (Validation.validate(form, formdata)) {
+      submitToState(formdata);
+    }
   };
 
   return (

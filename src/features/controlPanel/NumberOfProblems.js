@@ -14,14 +14,13 @@ const NumberOfProblems = ({ numberOfProblems }) => {
           type="number"
           className="form-control"
           defaultValue={numberOfProblems}
-          step="6"
+          step="1"
           min="6"
-          max="60"
+          max="100"
           ref={numberOfProblemsInput}
           required
         />
-        <div className="valid-feedback">Valid input div</div>
-        <div className="invalid-feedback">Invalid input div</div>
+        <div className="invalid-feedback"></div>
       </label>
     </>
   );

@@ -112,9 +112,8 @@ const Problem = ({ state }) => {
   );
 };
 
-const ProblemsRow = ({ state }) => {
-  // always 6 problems per row.
-  const problemIDs = Array(6)
+const ProblemsRow = ({ state, numberInThisRow }) => {
+  const problemIDs = Array(numberInThisRow)
     .fill(undefined)
     .map((elt) => crypto.randomUUID());
   const problemComponents = problemIDs.map((problemID) => (
@@ -124,14 +123,24 @@ const ProblemsRow = ({ state }) => {
 };
 
 const ProblemsView = ({ state }) => {
-  const numRows = Math.ceil(state.numberOfProblems / 6);
+  const numRows = Math.floor(state.numberOfProblems / 6);
+  const numberOfProblemsInLastRow = state.numberOfProblems % 6;
   const rowIDs = Array(numRows)
     .fill(undefined)
     .map((elt) => crypto.randomUUID());
   const rowComponents = rowIDs.map((rowID, index) => (
-    <ProblemsRow key={rowID} state={state} />
+    <ProblemsRow key={rowID} state={state} numberInThisRow={6} />
   ));
-  return <div>{rowComponents}</div>;
+  return (
+    <div>
+      {rowComponents}
+      <ProblemsRow
+        key={crypto.randomUUID()}
+        state={state}
+        numberInThisRow={numberOfProblemsInLastRow}
+      />
+    </div>
+  );
 };
 
 export default ProblemsView;
