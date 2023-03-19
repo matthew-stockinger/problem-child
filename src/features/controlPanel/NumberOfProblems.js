@@ -20,7 +20,7 @@ const NumberOfProblems = ({ numberOfProblems }) => {
           ref={numberOfProblemsInput}
           required
         />
-        <div className="invalid-feedback"></div>
+        <p className="invalid-feedback"></p>
       </label>
     </>
   );

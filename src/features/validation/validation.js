@@ -4,6 +4,9 @@ export const validate = (form, formdata) => {
   return numberOfProblemsValidity && constraintsValidity;
 };
 
+// number of problems must be between 6 and 100.
+// setCustomValidity of input element and display invalid feedback if needed.
+// return {bool} - did number of problems validate?
 const setNumberOfProblemsValidity = (form, formdata) => {
   const numProbsValue = parseInt(formdata.get("numberOfProblemsInput"));
   const numProbsInputElt = form.querySelector("#numberOfProblemsInput");
@@ -29,16 +32,19 @@ const setNumberOfProblemsValidity = (form, formdata) => {
   }
 };
 
+// check operand constraints and result constraints.
+// return {bool} - did all constraints validate?
 const setConstraintsValidity = (form, formdata) => {
   const operandValidity = setOperandConstraintsValidity(form, formdata);
+  const resultValidity = setResultConstraintsValidity(form, formdata);
 
-  return operandValidity;
-
-  // TODO: watch for min result greater than highest possible, and vice versa.
+  return operandValidity && resultValidity;
 };
 
+// operand mins must be less than max.
+// if not, setCustomValidity and display error feedback.
+// return {bool} - did the operand constraints validate?
 const setOperandConstraintsValidity = (form, formdata) => {
-  // operand mins must be less than max.
   const min1 = parseInt(formdata.get("operand1MinInput"));
   const max1 = parseInt(formdata.get("operand1MaxInput"));
   const min2 = parseInt(formdata.get("operand2MinInput"));
@@ -88,5 +94,35 @@ const setOperandConstraintsValidity = (form, formdata) => {
   max1InvalidDiv.innerText = "";
   min2InvalidDiv.innerText = "";
   max2InvalidDiv.innerText = "";
+  return true;
+};
+
+// 1. result min must be < max.
+// 2. result min cannot be > highest possible result.
+// 3. result max cannot be < lowest possible result.
+// 4. if input is empty, set state.resultMin/Max to undefined.
+// return {bool} - did result constraints validate?
+const setResultConstraintsValidity = (form, formdata) => {
+  // TODO: add logic here.
+  const resultMinValue = parseInt(formdata.get("resultMinInput"));
+  const resultMaxValue = parseInt(formdata.get("resultMaxInput"));
+
+  const resultMinInputElt = form.querySelector("#resultMinInput");
+  const resultMaxInputElt = form.querySelector("#resultMaxInput");
+
+  const resultMinInvalidDiv = form.querySelector(
+    "#resultMinInput + .invalid-feedback"
+  );
+  const resultMaxInvalidDiv = form.querySelector(
+    "#resultMaxInput + .invalid-feedback"
+  );
+  // if value is empty, set state to undefined
+
+  // require: min < max
+
+  // if min > highestPossible, throw error
+
+  // if max < lowestPossible, throw error
+
   return true;
 };

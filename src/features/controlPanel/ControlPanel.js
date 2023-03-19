@@ -38,7 +38,7 @@ const ControlPanel = ({ state, stateSetters }) => {
       <div className="card-body">
         <form onSubmit={handleSubmit} className="was-validated" noValidate>
           <div className="row justify-content-center">
-            <div className="col-md-3">
+            <div className="col-md-9 col-lg-3">
               <div className="mb-3">
                 <Operations
                   operations={state.operations}
@@ -52,12 +52,12 @@ const ControlPanel = ({ state, stateSetters }) => {
                 <Shuffle />
               </div>
             </div>
-            <div className="col-md-auto">
+            <div className="col-md-9 col-lg-5 col-xl-4">
               <Constraints
                 operandConstraints={state.operandConstraints}
                 resultConstraints={state.resultConstraints}
               />
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-primary mt-2">
                 Submit
               </button>
             </div>

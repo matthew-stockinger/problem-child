@@ -207,7 +207,7 @@ const Constraints = ({ operandConstraints, resultConstraints }) => {
               step="1"
               required
             />
-            <div className="invalid-feedback"></div>
+            <p className="invalid-feedback"></p>
           </label>
         </div>
         <div className="col">
@@ -222,7 +222,7 @@ const Constraints = ({ operandConstraints, resultConstraints }) => {
               step="1"
               required
             />
-            <div className="invalid-feedback"></div>
+            <p className="invalid-feedback"></p>
           </label>
         </div>
       </div>
@@ -239,7 +239,7 @@ const Constraints = ({ operandConstraints, resultConstraints }) => {
               step="1"
               required
             />
-            <div className="invalid-feedback"></div>
+            <p className="invalid-feedback"></p>
           </label>
         </div>
         <div className="col">
@@ -254,7 +254,7 @@ const Constraints = ({ operandConstraints, resultConstraints }) => {
               step="1"
               required
             />
-            <div className="invalid-feedback"></div>
+            <p className="invalid-feedback"></p>
           </label>
         </div>
       </div>
@@ -270,7 +270,7 @@ const Constraints = ({ operandConstraints, resultConstraints }) => {
               defaultValue={resultConstraints.min}
               step="1"
             />
-            <div className="invalid-feedback"></div>
+            <p className="invalid-feedback"></p>
           </label>
         </div>
         <div className="col">
@@ -284,7 +284,7 @@ const Constraints = ({ operandConstraints, resultConstraints }) => {
               defaultValue={resultConstraints.max}
               step="1"
             />
-            <div className="invalid-feedback"></div>
+            <p className="invalid-feedback"></p>
           </label>
         </div>
       </div>
