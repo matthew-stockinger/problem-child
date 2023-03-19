@@ -201,14 +201,13 @@ const Constraints = ({ operandConstraints, resultConstraints }) => {
             <input
               id="operand1MinInput"
               name="operand1MinInput"
-              // ref={operand1MinInput}
               type="number"
               className="form-control"
               defaultValue={operandConstraints.min1}
               step="1"
-              // onBlur={handleOperand1MinChange}
               required
             />
+            <div className="invalid-feedback"></div>
           </label>
         </div>
         <div className="col">
@@ -217,14 +216,13 @@ const Constraints = ({ operandConstraints, resultConstraints }) => {
             <input
               id="operand1MaxInput"
               name="operand1MaxInput"
-              // ref={operand1MaxInput}
               type="number"
               className="form-control"
               defaultValue={operandConstraints.max1}
               step="1"
-              // onBlur={handleOperand1MaxChange}
               required
             />
+            <div className="invalid-feedback"></div>
           </label>
         </div>
       </div>
@@ -235,14 +233,13 @@ const Constraints = ({ operandConstraints, resultConstraints }) => {
             <input
               id="operand2MinInput"
               name="operand2MinInput"
-              // ref={operand2MinInput}
               type="number"
               className="form-control"
               defaultValue={operandConstraints.min2}
               step="1"
-              // onBlur={handleOperand2MinChange}
               required
             />
+            <div className="invalid-feedback"></div>
           </label>
         </div>
         <div className="col">
@@ -251,14 +248,13 @@ const Constraints = ({ operandConstraints, resultConstraints }) => {
             <input
               id="operand2MaxInput"
               name="operand2MaxInput"
-              // ref={operand2MaxInput}
               type="number"
               className="form-control"
               defaultValue={operandConstraints.max2}
               step="1"
-              // onBlur={handleOperand2MaxChange}
               required
             />
+            <div className="invalid-feedback"></div>
           </label>
         </div>
       </div>
@@ -269,13 +265,12 @@ const Constraints = ({ operandConstraints, resultConstraints }) => {
             <input
               id="resultMinInput"
               name="resultMinInput"
-              // ref={resultMinInput}
               type="number"
               className="form-control"
               defaultValue={resultConstraints.min}
               step="1"
-              // onBlur={handleResultMinChange}
             />
+            <div className="invalid-feedback"></div>
           </label>
         </div>
         <div className="col">
@@ -284,13 +279,12 @@ const Constraints = ({ operandConstraints, resultConstraints }) => {
             <input
               id="resultMaxInput"
               name="resultMaxInput"
-              // ref={resultMaxInput}
               type="number"
               className="form-control"
               defaultValue={resultConstraints.max}
               step="1"
-              // onBlur={handleResultMaxChange}
             />
+            <div className="invalid-feedback"></div>
           </label>
         </div>
       </div>
