@@ -1,3 +1,5 @@
+// TODO: check  for decimal validation.
+
 export const validate = (form, formdata) => {
   const numberOfProblemsValidity = setNumberOfProblemsValidity(form, formdata);
   const constraintsValidity = setConstraintsValidity(form, formdata);
@@ -103,7 +105,6 @@ const setOperandConstraintsValidity = (form, formdata) => {
 // 4. if input is empty, set state.resultMin/Max to undefined.
 // return {bool} - did result constraints validate?
 const setResultConstraintsValidity = (form, formdata) => {
-  // TODO: add logic here.
   const resultMinValue = parseInt(formdata.get("resultMinInput"));
   const resultMaxValue = parseInt(formdata.get("resultMaxInput"));
 
@@ -116,13 +117,163 @@ const setResultConstraintsValidity = (form, formdata) => {
   const resultMaxInvalidDiv = form.querySelector(
     "#resultMaxInput + .invalid-feedback"
   );
-  // if value is empty, set state to undefined
 
   // require: min < max
+  if (resultMinValue > resultMaxValue) {
+    let errorMessage = "Minimum must be less than or equal to maximum.";
+    resultMinInputElt.setCustomValidity(errorMessage);
+    resultMaxInputElt.setCustomValidity(errorMessage);
+    resultMinInvalidDiv.innerText = errorMessage;
+    resultMaxInvalidDiv.innerText = errorMessage;
+    return false;
+  }
 
-  // if min > highestPossible, throw error
-
-  // if max < lowestPossible, throw error
+  // if min > highestPossible, invalidate
+  if (resultMinValue > extremeResult(formdata, Math.max)) {
+    let errorMessage = "Minimum result exceeds highest possible result.";
+    resultMinInputElt.setCustomValidity(errorMessage);
+    resultMinInvalidDiv.innerText = errorMessage;
+    return false;
+  }
+  // if max < lowestPossible, invalidate
+  if (resultMaxValue > extremeResult(formdata, Math.min)) {
+    let errorMessage = "Maximum result is lower than lowest possible result.";
+    resultMaxInputElt.setCustomValidity(errorMessage);
+    resultMaxInvalidDiv.innerText = errorMessage;
+    return false;
+  }
 
   return true;
 };
+
+// finds the highest or lowest possible result, checking all active operations
+// formdata {FormData}
+// extremityFn {Function} - either Math.max or Math.min
+// return {number}
+export const extremeResult = (formdata, extremityFn) => {
+  // TODO: change operations assignment to use formdata.
+  const operations = ["+", "-", "*", "/"];
+  let extremeResult;
+
+  if (operations.includes("+")) {
+    extremeResult = extremeResultByOperation(formdata, extremityFn, add);
+  }
+  if (operations.includes("-")) {
+    const subtractionExtreme = extremeResultByOperation(
+      formdata,
+      extremityFn,
+      subtract
+    );
+    extremeResult = extremeResult
+      ? extremityFn(extremeResult, subtractionExtreme)
+      : subtractionExtreme;
+  }
+  if (operations.includes("*")) {
+    const multiplicationExtreme = extremeResultByOperation(
+      formdata,
+      extremityFn,
+      multiply
+    );
+    extremeResult = extremeResult
+      ? extremityFn(extremeResult, multiplicationExtreme)
+      : multiplicationExtreme;
+  }
+  if (operations.includes("/")) {
+    const divisionExtreme = extremeResultByOperation(
+      formdata,
+      extremityFn,
+      divide
+    );
+    extremeResult = extremeResult
+      ? extremityFn(extremeResult, divisionExtreme)
+      : divisionExtreme;
+  }
+
+  return extremeResult;
+};
+
+// formdata {FormData}
+// extremityFn {Function} - either Math.min or Math.max
+// operationFn {Function} - add, subtract, multiply, or divide
+export const extremeResultByOperation = (
+  formdata,
+  extremityFn,
+  operationFn
+) => {
+  const operand1MinValue = parseInt(formdata.get("operand1MinInput"));
+  const operand1MaxValue = parseInt(formdata.get("operand1MaxInput"));
+  const operand2MinValue = parseInt(formdata.get("operand2MinInput"));
+  const operand2MaxValue = parseInt(formdata.get("operand2MaxInput"));
+
+  if ([add, subtract, multiply].includes(operationFn)) {
+    // operands could be shuffled in ProblemsView. need all permutations
+    return extremityFn(
+      operationFn(operand1MinValue, operand2MinValue),
+      operationFn(operand1MinValue, operand2MaxValue),
+      operationFn(operand1MaxValue, operand2MinValue),
+      operationFn(operand1MaxValue, operand2MaxValue),
+      operationFn(operand2MinValue, operand1MinValue),
+      operationFn(operand2MinValue, operand1MaxValue),
+      operationFn(operand2MaxValue, operand1MinValue),
+      operationFn(operand2MaxValue, operand1MaxValue)
+    );
+  } else if (operationFn === divide) {
+    /* test cases:
+    - positive-positive
+    - 0-positive
+    - negative-positive
+    - negative-0
+    - negative-negative
+
+    - 1-10, 1-10  // min 0.1  max 10
+    - 1-10, 0-10  // min 0    max 10
+    - 1-10, -10-10  // min -10  max 10
+    - 1-10, -10-0 // min -10  max 0
+    - 1-10, -10--1  // min -10  max -0.1
+
+    */
+    let operand1Denominators = [operand1MinValue, operand1MaxValue];
+    if (operand1MinValue < 0 && operand1MaxValue > 0) {
+      operand1Denominators.push(-1, 1);
+    }
+    if (operand1MinValue === 0) {
+      operand1Denominators[0] = 1;
+    }
+    if (operand1MaxValue === 0) {
+      operand1Denominators[1] = -1;
+    }
+
+    let operand2Denominators = [operand2MinValue, operand2MaxValue];
+    if (operand2MinValue < 0 && operand2MaxValue > 0) {
+      operand2Denominators.push(-1, 1);
+    }
+    if (operand2MinValue === 0) {
+      operand2Denominators[0] = 1;
+    }
+    if (operand2MaxValue === 0) {
+      operand2Denominators[1] = -1;
+    }
+
+    return extremityFn(
+      ...operand2Denominators.map((operand2Denominator) =>
+        operationFn(operand1MinValue, operand2Denominator)
+      ),
+      ...operand2Denominators.map((operand2Denominator) =>
+        operationFn(operand1MaxValue, operand2Denominator)
+      ),
+      ...operand1Denominators.map((operand1Denominator) =>
+        operationFn(operand2MinValue, operand1Denominator)
+      ),
+      ...operand1Denominators.map((operand1Denominator) =>
+        operationFn(operand2MaxValue, operand1Denominator)
+      )
+    );
+  } else {
+    throw new Error("invalid operationFn");
+  }
+};
+
+export const add = (a, b) => a + b;
+export const subtract = (a, b) => a - b;
+export const multiply = (a, b) => a * b;
+export const divide = (a, b) => a / b;
