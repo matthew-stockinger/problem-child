@@ -42,23 +42,6 @@ const ProblemChild = () => {
   );
 };
 
-// const DATAMODEL = {
-//   operations: ["+", "-"], // must be characters +, -, *, or /
-//   numberOfProblems: 30,
-//   operandConstraints: {
-//     min1: 0,
-//     max1: 10,
-//     min2: 0,
-//     max2: 10,
-//   },
-//   resultConstraints: {
-//     min: undefined,
-//     max: undefined,
-//   },
-//   shuffle: false,
-//   instructionsVisible: false,
-// };
-
 function App() {
   return <ProblemChild />;
 }
