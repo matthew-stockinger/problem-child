@@ -1,4 +1,3 @@
-// TODO: add stepMismatch validation to operand constraints and result constraints.
 // TODO: need to validate all of the form at once, onSubmit.  Only shows one error at a time.
 
 export const validate = (form, formdata) => {
@@ -86,9 +85,22 @@ const setOperandConstraintsValidity = (form, formdata) => {
       min1InputElt,
       "Please enter a whole number."
     );
-  } else if (max1InputElt.validity.stepMismatch) {
+  }
+  if (max1InputElt.validity.stepMismatch) {
     return setValidityStateAndMessage(
       max1InputElt,
+      "Please enter a whole number."
+    );
+  }
+  if (min2InputElt.validity.stepMismatch) {
+    return setValidityStateAndMessage(
+      min2InputElt,
+      "Please enter a whole number."
+    );
+  }
+  if (max2InputElt.validity.stepMismatch) {
+    return setValidityStateAndMessage(
+      max2InputElt,
       "Please enter a whole number."
     );
   }
@@ -137,6 +149,19 @@ const setResultConstraintsValidity = (form, formdata) => {
     return setValidityStateAndMessage(
       resultMaxInputElt,
       "Maximum is lower than lowest possible result."
+    );
+  }
+
+  if (resultMinInputElt.validity.stepMismatch) {
+    return setValidityStateAndMessage(
+      resultMinInputElt,
+      "Please enter a whole number."
+    );
+  }
+  if (resultMaxInputElt.validity.stepMismatch) {
+    return setValidityStateAndMessage(
+      resultMaxInputElt,
+      "Please enter a whole number."
     );
   }
 
