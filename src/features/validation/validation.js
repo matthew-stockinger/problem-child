@@ -143,6 +143,10 @@ const setResultConstraintsValidity = (form, formdata) => {
     return false;
   }
 
+  resultMinInputElt.setCustomValidity("");
+  resultMaxInputElt.setCustomValidity("");
+  resultMinInvalidDiv.innerText = "";
+  resultMaxInvalidDiv.innerText = "";
   return true;
 };
 

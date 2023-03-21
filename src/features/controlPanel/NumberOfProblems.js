@@ -2,7 +2,7 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const NumberOfProblems = ({ numberOfProblems }) => {
-  const numberOfProblemsInput = React.useRef(null);
+  // const numberOfProblemsInput = React.useRef(null);
 
   return (
     <>
@@ -17,7 +17,7 @@ const NumberOfProblems = ({ numberOfProblems }) => {
           step="1"
           min="6"
           max="100"
-          ref={numberOfProblemsInput}
+          // ref={numberOfProblemsInput}
           required
         />
         <p className="invalid-feedback"></p>
