@@ -1,4 +1,4 @@
-// TODO: check  for decimal validation.
+// TODO: rewrite with new setValidityStateAndMessage function.
 
 export const validate = (form, formdata) => {
   const numberOfProblemsValidity = setNumberOfProblemsValidity(form, formdata);
@@ -12,25 +12,24 @@ export const validate = (form, formdata) => {
 const setNumberOfProblemsValidity = (form, formdata) => {
   const numProbsValue = parseInt(formdata.get("numberOfProblemsInput"));
   const numProbsInputElt = form.querySelector("#numberOfProblemsInput");
-  const invalidDivElt = form.querySelector(
-    "#numberOfProblemsInput + .invalid-feedback"
-  );
-  let errorMessage = "";
 
   if (numProbsValue < 6) {
-    errorMessage = "Number of problems must be at least 6.";
-    numProbsInputElt.setCustomValidity(errorMessage);
-    invalidDivElt.innerText = errorMessage;
-    return false;
+    return setValidityStateAndMessage(
+      numProbsInputElt,
+      "Number of problems must be at least 6."
+    );
   } else if (numProbsValue > 100) {
-    errorMessage = "Number of problems must be less than or equal to 100.";
-    numProbsInputElt.setCustomValidity(errorMessage);
-    invalidDivElt.innerText = errorMessage;
-    return false;
+    return setValidityStateAndMessage(
+      numProbsInputElt,
+      "Number of problems must be less than or equal to 100."
+    );
+  } else if (numProbsInputElt.validity.stepMismatch) {
+    return setValidityStateAndMessage(
+      numProbsInputElt,
+      "Please enter a whole-number value."
+    );
   } else {
-    numProbsInputElt.setCustomValidity("");
-    invalidDivElt.innerText = "";
-    return true;
+    return setValidityStateAndMessage(numProbsInputElt, "");
   }
 };
 
@@ -281,3 +280,10 @@ export const add = (a, b) => a + b;
 export const subtract = (a, b) => a - b;
 export const multiply = (a, b) => a * b;
 export const divide = (a, b) => a / b;
+
+const setValidityStateAndMessage = (element, errorMessage) => {
+  element.setCustomValidity(errorMessage);
+  element.parentElement.querySelector(".invalid-feedback").innerText =
+    errorMessage;
+  return errorMessage === "" ? true : false;
+};
