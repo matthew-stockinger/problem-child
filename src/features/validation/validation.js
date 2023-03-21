@@ -1,4 +1,5 @@
-// TODO: rewrite with new setValidityStateAndMessage function.
+// TODO: add stepMismatch validation to operand constraints and result constraints.
+// TODO: need to validate all of the form at once, onSubmit.  Only shows one error at a time.
 
 export const validate = (form, formdata) => {
   const numberOfProblemsValidity = setNumberOfProblemsValidity(form, formdata);
@@ -56,45 +57,46 @@ const setOperandConstraintsValidity = (form, formdata) => {
   const min2InputElt = form.querySelector("#operand2MinInput");
   const max2InputElt = form.querySelector("#operand2MaxInput");
 
-  const min1InvalidDiv = form.querySelector(
-    "#operand1MinInput + .invalid-feedback"
-  );
-  const max1InvalidDiv = form.querySelector(
-    "#operand1MaxInput + .invalid-feedback"
-  );
-  const min2InvalidDiv = form.querySelector(
-    "#operand2MinInput + .invalid-feedback"
-  );
-  const max2InvalidDiv = form.querySelector(
-    "#operand2MaxInput + .invalid-feedback"
-  );
-
-  let errorMessage = "Minimum must be less than or equal to maximum.";
-
   if (min1 > max1) {
-    min1InputElt.setCustomValidity(errorMessage);
-    max1InputElt.setCustomValidity(errorMessage);
-    min1InvalidDiv.innerText = errorMessage;
-    max1InvalidDiv.innerText = errorMessage;
+    setValidityStateAndMessage(
+      min1InputElt,
+      "Minimum must be less than or equal to maximum."
+    );
+    setValidityStateAndMessage(
+      max1InputElt,
+      "Minimum must be less than or equal to maximum."
+    );
     return false;
   }
 
   if (min2 > max2) {
-    min2InputElt.setCustomValidity(errorMessage);
-    max2InputElt.setCustomValidity(errorMessage);
-    min2InvalidDiv.innerText = errorMessage;
-    max2InvalidDiv.innerText = errorMessage;
+    setValidityStateAndMessage(
+      min2InputElt,
+      "Minimum must be less than or equal to maximum."
+    );
+    setValidityStateAndMessage(
+      max2InputElt,
+      "Minimum must be less than or equal to maximum."
+    );
     return false;
   }
 
-  min1InputElt.setCustomValidity("");
-  max1InputElt.setCustomValidity("");
-  min2InputElt.setCustomValidity("");
-  max2InputElt.setCustomValidity("");
-  min1InvalidDiv.innerText = "";
-  max1InvalidDiv.innerText = "";
-  min2InvalidDiv.innerText = "";
-  max2InvalidDiv.innerText = "";
+  if (min1InputElt.validity.stepMismatch) {
+    return setValidityStateAndMessage(
+      min1InputElt,
+      "Please enter a whole number."
+    );
+  } else if (max1InputElt.validity.stepMismatch) {
+    return setValidityStateAndMessage(
+      max1InputElt,
+      "Please enter a whole number."
+    );
+  }
+
+  setValidityStateAndMessage(min1InputElt, "");
+  setValidityStateAndMessage(max1InputElt, "");
+  setValidityStateAndMessage(min2InputElt, "");
+  setValidityStateAndMessage(max2InputElt, "");
   return true;
 };
 
@@ -110,42 +112,36 @@ const setResultConstraintsValidity = (form, formdata) => {
   const resultMinInputElt = form.querySelector("#resultMinInput");
   const resultMaxInputElt = form.querySelector("#resultMaxInput");
 
-  const resultMinInvalidDiv = form.querySelector(
-    "#resultMinInput + .invalid-feedback"
-  );
-  const resultMaxInvalidDiv = form.querySelector(
-    "#resultMaxInput + .invalid-feedback"
-  );
-
   // require: min < max
   if (resultMinValue > resultMaxValue) {
-    let errorMessage = "Minimum must be less than or equal to maximum.";
-    resultMinInputElt.setCustomValidity(errorMessage);
-    resultMaxInputElt.setCustomValidity(errorMessage);
-    resultMinInvalidDiv.innerText = errorMessage;
-    resultMaxInvalidDiv.innerText = errorMessage;
+    setValidityStateAndMessage(
+      resultMinInputElt,
+      "Minimum must be less than or equal to maximum."
+    );
+    setValidityStateAndMessage(
+      resultMaxInputElt,
+      "Minimum must be less than or equal to maximum."
+    );
     return false;
   }
 
   // if min > highestPossible, invalidate
   if (resultMinValue > extremeResult(formdata, Math.max)) {
-    let errorMessage = "Minimum result exceeds highest possible result.";
-    resultMinInputElt.setCustomValidity(errorMessage);
-    resultMinInvalidDiv.innerText = errorMessage;
-    return false;
+    return setValidityStateAndMessage(
+      resultMinInputElt,
+      "Minimum result exceeds highest possible result."
+    );
   }
   // if max < lowestPossible, invalidate
-  if (resultMaxValue > extremeResult(formdata, Math.min)) {
-    let errorMessage = "Maximum result is lower than lowest possible result.";
-    resultMaxInputElt.setCustomValidity(errorMessage);
-    resultMaxInvalidDiv.innerText = errorMessage;
-    return false;
+  if (resultMaxValue < extremeResult(formdata, Math.min)) {
+    return setValidityStateAndMessage(
+      resultMaxInputElt,
+      "Maximum is lower than lowest possible result."
+    );
   }
 
-  resultMinInputElt.setCustomValidity("");
-  resultMaxInputElt.setCustomValidity("");
-  resultMinInvalidDiv.innerText = "";
-  resultMaxInvalidDiv.innerText = "";
+  setValidityStateAndMessage(resultMinInputElt, "");
+  setValidityStateAndMessage(resultMaxInputElt, "");
   return true;
 };
 
@@ -221,20 +217,6 @@ export const extremeResultByOperation = (
       operationFn(operand2MaxValue, operand1MaxValue)
     );
   } else if (operationFn === divide) {
-    /* test cases:
-    - positive-positive
-    - 0-positive
-    - negative-positive
-    - negative-0
-    - negative-negative
-
-    - 1-10, 1-10  // min 0.1  max 10
-    - 1-10, 0-10  // min 0    max 10
-    - 1-10, -10-10  // min -10  max 10
-    - 1-10, -10-0 // min -10  max 0
-    - 1-10, -10--1  // min -10  max -0.1
-
-    */
     let operand1Denominators = [operand1MinValue, operand1MaxValue];
     if (operand1MinValue < 0 && operand1MaxValue > 0) {
       operand1Denominators.push(-1, 1);
