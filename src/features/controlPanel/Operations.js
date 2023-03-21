@@ -2,7 +2,6 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./operations.css";
 
-// TODO: render colors depending on items present in operations.
 const Operations = ({ operations }) => {
   const [hasPlus, hasMinus, hasTimes, hasDivide] = [
     operations.includes("+"),

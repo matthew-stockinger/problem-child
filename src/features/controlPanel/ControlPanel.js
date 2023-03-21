@@ -16,7 +16,6 @@ const ControlPanel = ({ state, stateSetters }) => {
   } = stateSetters;
 
   const submitToState = (formdata) => {
-    // TODO: finish all state submissions.
     const numProbsValue = parseInt(formdata.get("numberOfProblemsInput"));
     setNumberOfProblems(numProbsValue);
 

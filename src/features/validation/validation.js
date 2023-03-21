@@ -163,7 +163,6 @@ const setResultConstraintsValidity = (form, formdata) => {
 // extremityFn {Function} - either Math.max or Math.min
 // return {number}
 export const extremeResult = (formdata, extremityFn) => {
-  // TODO: change operations assignment to use formdata.
   const operations = ["+", "-", "*", "/"];
   let extremeResult;
 

@@ -1,3 +1,5 @@
-- event handlers needed in
-  - Operations
-- add reset button to form.
+- in Operations: // TODO: render colors depending on items present in operations state.
+- Operations: add event handlers
+- validation.extremeResult: change operations assignment to use formdata.
+- ControlPanel.submitToState: finish all state submissions.
+- ControlPanel: add reset button to form.
