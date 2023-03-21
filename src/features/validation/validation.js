@@ -1,5 +1,3 @@
-// TODO: need to validate all of the form at once, onSubmit.  Only shows one error at a time.
-
 export const validate = (form, formdata) => {
   const numberOfProblemsValidity = setNumberOfProblemsValidity(form, formdata);
   const constraintsValidity = setConstraintsValidity(form, formdata);
@@ -46,15 +44,20 @@ const setConstraintsValidity = (form, formdata) => {
 // if not, setCustomValidity and display error feedback.
 // return {bool} - did the operand constraints validate?
 const setOperandConstraintsValidity = (form, formdata) => {
-  const min1 = parseInt(formdata.get("operand1MinInput"));
-  const max1 = parseInt(formdata.get("operand1MaxInput"));
-  const min2 = parseInt(formdata.get("operand2MinInput"));
-  const max2 = parseInt(formdata.get("operand2MaxInput"));
-
   const min1InputElt = form.querySelector("#operand1MinInput");
   const max1InputElt = form.querySelector("#operand1MaxInput");
   const min2InputElt = form.querySelector("#operand2MinInput");
   const max2InputElt = form.querySelector("#operand2MaxInput");
+
+  setValidityStateAndMessage(min1InputElt, "");
+  setValidityStateAndMessage(max1InputElt, "");
+  setValidityStateAndMessage(min2InputElt, "");
+  setValidityStateAndMessage(max2InputElt, "");
+
+  const min1 = parseInt(formdata.get("operand1MinInput"));
+  const max1 = parseInt(formdata.get("operand1MaxInput"));
+  const min2 = parseInt(formdata.get("operand2MinInput"));
+  const max2 = parseInt(formdata.get("operand2MaxInput"));
 
   if (min1 > max1) {
     setValidityStateAndMessage(
@@ -65,7 +68,6 @@ const setOperandConstraintsValidity = (form, formdata) => {
       max1InputElt,
       "Minimum must be less than or equal to maximum."
     );
-    return false;
   }
 
   if (min2 > max2) {
@@ -77,39 +79,27 @@ const setOperandConstraintsValidity = (form, formdata) => {
       max2InputElt,
       "Minimum must be less than or equal to maximum."
     );
-    return false;
   }
 
   if (min1InputElt.validity.stepMismatch) {
-    return setValidityStateAndMessage(
-      min1InputElt,
-      "Please enter a whole number."
-    );
+    setValidityStateAndMessage(min1InputElt, "Please enter a whole number.");
   }
   if (max1InputElt.validity.stepMismatch) {
-    return setValidityStateAndMessage(
-      max1InputElt,
-      "Please enter a whole number."
-    );
+    setValidityStateAndMessage(max1InputElt, "Please enter a whole number.");
   }
   if (min2InputElt.validity.stepMismatch) {
-    return setValidityStateAndMessage(
-      min2InputElt,
-      "Please enter a whole number."
-    );
+    setValidityStateAndMessage(min2InputElt, "Please enter a whole number.");
   }
   if (max2InputElt.validity.stepMismatch) {
-    return setValidityStateAndMessage(
-      max2InputElt,
-      "Please enter a whole number."
-    );
+    setValidityStateAndMessage(max2InputElt, "Please enter a whole number.");
   }
 
-  setValidityStateAndMessage(min1InputElt, "");
-  setValidityStateAndMessage(max1InputElt, "");
-  setValidityStateAndMessage(min2InputElt, "");
-  setValidityStateAndMessage(max2InputElt, "");
-  return true;
+  return (
+    min1InputElt.checkValidity() &&
+    max1InputElt.checkValidity() &&
+    min2InputElt.checkValidity() &&
+    max2InputElt.checkValidity()
+  );
 };
 
 // 1. result min must be < max.
@@ -118,11 +108,14 @@ const setOperandConstraintsValidity = (form, formdata) => {
 // 4. if input is empty, set state.resultMin/Max to undefined.
 // return {bool} - did result constraints validate?
 const setResultConstraintsValidity = (form, formdata) => {
-  const resultMinValue = parseInt(formdata.get("resultMinInput"));
-  const resultMaxValue = parseInt(formdata.get("resultMaxInput"));
-
   const resultMinInputElt = form.querySelector("#resultMinInput");
   const resultMaxInputElt = form.querySelector("#resultMaxInput");
+
+  setValidityStateAndMessage(resultMinInputElt, "");
+  setValidityStateAndMessage(resultMaxInputElt, "");
+
+  const resultMinValue = parseInt(formdata.get("resultMinInput"));
+  const resultMaxValue = parseInt(formdata.get("resultMaxInput"));
 
   // require: min < max
   if (resultMinValue > resultMaxValue) {
@@ -134,40 +127,35 @@ const setResultConstraintsValidity = (form, formdata) => {
       resultMaxInputElt,
       "Minimum must be less than or equal to maximum."
     );
-    return false;
   }
 
-  // if min > highestPossible, invalidate
   if (resultMinValue > extremeResult(formdata, Math.max)) {
-    return setValidityStateAndMessage(
+    setValidityStateAndMessage(
       resultMinInputElt,
       "Minimum result exceeds highest possible result."
     );
   }
-  // if max < lowestPossible, invalidate
   if (resultMaxValue < extremeResult(formdata, Math.min)) {
-    return setValidityStateAndMessage(
+    setValidityStateAndMessage(
       resultMaxInputElt,
       "Maximum is lower than lowest possible result."
     );
   }
 
   if (resultMinInputElt.validity.stepMismatch) {
-    return setValidityStateAndMessage(
+    setValidityStateAndMessage(
       resultMinInputElt,
       "Please enter a whole number."
     );
   }
   if (resultMaxInputElt.validity.stepMismatch) {
-    return setValidityStateAndMessage(
+    setValidityStateAndMessage(
       resultMaxInputElt,
       "Please enter a whole number."
     );
   }
 
-  setValidityStateAndMessage(resultMinInputElt, "");
-  setValidityStateAndMessage(resultMaxInputElt, "");
-  return true;
+  return resultMinInputElt.checkValidity() && resultMaxInputElt.checkValidity();
 };
 
 // finds the highest or lowest possible result, checking all active operations
