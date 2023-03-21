@@ -1,4 +1,3 @@
-- in Operations: // TODO: render colors depending on items present in operations state.
 - Operations: add event handlers
 - validation.extremeResult: change operations assignment to use formdata.
 - ControlPanel.submitToState: finish all state submissions.
