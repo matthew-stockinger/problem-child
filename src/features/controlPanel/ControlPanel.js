@@ -27,6 +27,8 @@ const ControlPanel = ({ state, stateSetters }) => {
     const form = e.target;
     const formdata = new FormData(form);
 
+    // get operations state here and append to formdata.
+
     if (Validation.validate(form, formdata)) {
       submitToState(formdata);
     }

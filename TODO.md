@@ -1,9 +1,9 @@
 - Operations: add event handlers
-  - on click
-    - change highlight immediately.
+  - mouse pointer is a cursor when hovering over operations icons. Fix this.
+  - on form submit
     - read which ones are green and submit to state on submit button click.
-    - could perhaps implement this through component-level useState. Write a controlled component.
     - challenge: ControlPanel.submitToState takes formdata as input. How do I append to that specific formdata from the Operations Component? **the FormData should store the state of this component.**
+- ControlPanel(?): add .was-validated only after submit.
 - validation.extremeResult: change operations assignment to use formdata.
 - ControlPanel.submitToState: finish all state submissions.
 - ControlPanel: add reset button to form.

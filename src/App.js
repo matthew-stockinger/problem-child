@@ -3,7 +3,7 @@ import ProblemsView from "./features/problems/ProblemsView";
 import ControlPanel from "./features/controlPanel/ControlPanel";
 
 const ProblemChild = () => {
-  const [operations, setOperations] = React.useState(["*", "+"]);
+  const [operations, setOperations] = React.useState(["+"]);
   const [numberOfProblems, setNumberOfProblems] = React.useState(24);
   const [operandConstraints, setOperandConstraints] = React.useState({
     min1: 10,
