@@ -1,4 +1,6 @@
 - fix: if no operation is selected, app crashes.
+  - merge branch
+- add Constraints state submission.
 - ControlPanel(?): add .was-validated only after submit.
 - validation.extremeResult: change operations assignment to use formdata.
 - ControlPanel.submitToState: finish all state submissions.
