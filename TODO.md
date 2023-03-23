@@ -1,5 +1,4 @@
 - Operations: add event handlers
-  - mouse pointer is a cursor when hovering over operations icons. Fix this.
   - on form submit
     - read which ones are green and submit to state on submit button click.
     - challenge: ControlPanel.submitToState takes formdata as input. How do I append to that specific formdata from the Operations Component? **the FormData should store the state of this component.**
