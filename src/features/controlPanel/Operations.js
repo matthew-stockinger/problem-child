@@ -26,60 +26,60 @@ const Operations = ({ operations }) => {
         <fieldset>
           <div className="row g-0 text-center">
             <div className="col">
-              <span
+              <button
                 id="Plus"
                 className={
-                  "operation-icon text-light" +
+                  "operation-icon btn" +
                   (operationsInternalState.hasPlus
-                    ? " bg-success"
-                    : " bg-secondary")
+                    ? " btn-success"
+                    : " btn-secondary")
                 }
                 onClick={handleClick}
               >
                 {String.fromCodePoint(0x0002b)} {/* &plus; */}
-              </span>
+              </button>
             </div>
             <div className="col">
-              <span
+              <button
                 id="Minus"
                 className={
-                  "operation-icon text-light" +
+                  "operation-icon btn" +
                   (operationsInternalState.hasMinus
-                    ? " bg-success"
-                    : " bg-secondary")
+                    ? " btn-success"
+                    : " btn-secondary")
                 }
                 onClick={handleClick}
               >
                 {String.fromCodePoint(0x2212)} {/* &minus; */}
-              </span>
+              </button>
             </div>
             <div className="col">
-              <span
+              <button
                 id="Times"
                 className={
-                  "operation-icon text-light" +
+                  "operation-icon btn" +
                   (operationsInternalState.hasTimes
-                    ? " bg-success"
-                    : " bg-secondary")
+                    ? " btn-success"
+                    : " btn-secondary")
                 }
                 onClick={handleClick}
               >
                 {String.fromCodePoint(0x000d7)} {/* &times; */}
-              </span>
+              </button>
             </div>
             <div className="col">
-              <span
+              <button
                 id="Divide"
                 className={
-                  "operation-icon text-light" +
+                  "operation-icon btn" +
                   (operationsInternalState.hasDivide
-                    ? " bg-success"
-                    : " bg-secondary")
+                    ? " btn-success"
+                    : " btn-secondary")
                 }
                 onClick={handleClick}
               >
                 {String.fromCodePoint(0x000f7)} {/* &divide; */}
-              </span>
+              </button>
             </div>
           </div>
         </fieldset>
