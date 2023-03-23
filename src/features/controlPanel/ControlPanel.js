@@ -7,6 +7,11 @@ import Shuffle from "./Shuffle";
 import * as Validation from "../validation/validation";
 
 const ControlPanel = ({ state, stateSetters }) => {
+  // Operations component is a custom toggle button.
+  // Putting this here allows ControlPanel to read the internal state of Operations.
+  const [operationsInternalState, setOperationsInternalState] = React.useState([
+    ...state.operations,
+  ]);
   const {
     setOperations,
     setNumberOfProblems,
@@ -16,6 +21,9 @@ const ControlPanel = ({ state, stateSetters }) => {
   } = stateSetters;
 
   const submitToState = (formdata) => {
+    console.log("in submitToState");
+    setOperations(operationsInternalState);
+
     const numProbsValue = parseInt(formdata.get("numberOfProblemsInput"));
     setNumberOfProblems(numProbsValue);
 
@@ -26,8 +34,6 @@ const ControlPanel = ({ state, stateSetters }) => {
     e.preventDefault();
     const form = e.target;
     const formdata = new FormData(form);
-
-    // get operations state here and append to formdata.
 
     if (Validation.validate(form, formdata)) {
       submitToState(formdata);
@@ -42,8 +48,8 @@ const ControlPanel = ({ state, stateSetters }) => {
             <div className="col-md-9 col-lg-3">
               <div className="mb-3">
                 <Operations
-                  operations={state.operations}
-                  setOperations={stateSetters.setOperations}
+                  operationsInternalState={operationsInternalState}
+                  setOperationsInternalState={setOperationsInternalState}
                 />
               </div>
               <div className="mb-1">

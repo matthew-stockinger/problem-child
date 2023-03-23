@@ -1,8 +1,7 @@
-- Operations: add event handlers
-  - on form submit
-    - read which ones are green and submit to state on submit button click.
-    - challenge: ControlPanel.submitToState takes formdata as input. How do I append to that specific formdata from the Operations Component? **the FormData should store the state of this component.**
+- Operations bug: changing operation internal state submits form.
+  - related: if no operation is selected, app crashes.
 - ControlPanel(?): add .was-validated only after submit.
 - validation.extremeResult: change operations assignment to use formdata.
 - ControlPanel.submitToState: finish all state submissions.
 - ControlPanel: add reset button to form.
+- add CSS media query for printing.

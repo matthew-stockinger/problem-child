@@ -2,22 +2,32 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./operations.css";
 
-const Operations = ({ operations }) => {
-  const [operationsInternalState, setOperationsInternalState] = React.useState({
-    hasPlus: operations.includes("+"),
-    hasMinus: operations.includes("-"),
-    hasTimes: operations.includes("*"),
-    hasDivide: operations.includes("/"),
-  });
-
+const Operations = ({
+  operationsInternalState,
+  setOperationsInternalState,
+}) => {
   const handleClick = (event) => {
-    // identify which operation icon was clicked.
-    const stateKey = "has" + event.target.id;
-    // toggle the corresponding local state value.
-    setOperationsInternalState(() => ({
-      ...operationsInternalState,
-      [stateKey]: !operationsInternalState[stateKey],
-    }));
+    const operationName = event.target.id;
+    const operationNameToChar = {
+      plus: "+",
+      minus: "-",
+      times: "*",
+      divide: "/",
+    };
+    const operationChar = operationNameToChar[operationName];
+
+    if (operationsInternalState.includes(operationChar)) {
+      // remove
+      setOperationsInternalState(() =>
+        operationsInternalState.filter((char) => char !== operationChar)
+      );
+    } else {
+      // add
+      setOperationsInternalState(() => [
+        ...operationsInternalState,
+        operationChar,
+      ]);
+    }
   };
 
   return (
@@ -27,10 +37,10 @@ const Operations = ({ operations }) => {
           <div className="row g-0 text-center">
             <div className="col">
               <button
-                id="Plus"
+                id="plus"
                 className={
                   "operation-icon btn" +
-                  (operationsInternalState.hasPlus
+                  (operationsInternalState.includes("+")
                     ? " btn-success"
                     : " btn-secondary")
                 }
@@ -41,10 +51,10 @@ const Operations = ({ operations }) => {
             </div>
             <div className="col">
               <button
-                id="Minus"
+                id="minus"
                 className={
                   "operation-icon btn" +
-                  (operationsInternalState.hasMinus
+                  (operationsInternalState.includes("-")
                     ? " btn-success"
                     : " btn-secondary")
                 }
@@ -55,10 +65,10 @@ const Operations = ({ operations }) => {
             </div>
             <div className="col">
               <button
-                id="Times"
+                id="times"
                 className={
                   "operation-icon btn" +
-                  (operationsInternalState.hasTimes
+                  (operationsInternalState.includes("*")
                     ? " btn-success"
                     : " btn-secondary")
                 }
@@ -69,10 +79,10 @@ const Operations = ({ operations }) => {
             </div>
             <div className="col">
               <button
-                id="Divide"
+                id="divide"
                 className={
                   "operation-icon btn" +
-                  (operationsInternalState.hasDivide
+                  (operationsInternalState.includes("/")
                     ? " btn-success"
                     : " btn-secondary")
                 }
