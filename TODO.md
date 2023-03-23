@@ -1,5 +1,4 @@
-- Operations bug: changing operation internal state submits form.
-  - related: if no operation is selected, app crashes.
+- fix: if no operation is selected, app crashes.
 - ControlPanel(?): add .was-validated only after submit.
 - validation.extremeResult: change operations assignment to use formdata.
 - ControlPanel.submitToState: finish all state submissions.
