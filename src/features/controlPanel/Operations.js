@@ -37,6 +37,7 @@ const Operations = ({
           <div className="row g-0 text-center">
             <div className="col">
               <button
+                type="button"
                 id="plus"
                 className={
                   "operation-icon btn" +
@@ -51,6 +52,7 @@ const Operations = ({
             </div>
             <div className="col">
               <button
+                type="button"
                 id="minus"
                 className={
                   "operation-icon btn" +
@@ -65,6 +67,7 @@ const Operations = ({
             </div>
             <div className="col">
               <button
+                type="button"
                 id="times"
                 className={
                   "operation-icon btn" +
@@ -79,6 +82,7 @@ const Operations = ({
             </div>
             <div className="col">
               <button
+                type="button"
                 id="divide"
                 className={
                   "operation-icon btn" +
