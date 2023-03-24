@@ -35,36 +35,6 @@ const ControlPanel = ({ state, stateSetters }) => {
       max: formPayload.resultMaxValue,
     });
   };
-  // const submitToState = (formdata) => {
-  //   const [
-  //     numProbsValue,
-  //     min1Value,
-  //     max1Value,
-  //     min2Value,
-  //     max2Value,
-  //     resultMinValue,
-  //     resultMaxValue,
-  //   ] = [
-  //     parseInt(formdata.get("numberOfProblemsInput")),
-  //     parseInt(formdata.get("operand1MinInput")),
-  //     parseInt(formdata.get("operand1MaxInput")),
-  //     parseInt(formdata.get("operand2MinInput")),
-  //     parseInt(formdata.get("operand2MaxInput")),
-  //     parseInt(formdata.get("resultMinInput")),
-  //     parseInt(formdata.get("resultMaxInput")),
-  //   ];
-
-  //   setOperations(operationsInternalState);
-  //   setNumberOfProblems(numProbsValue);
-  //   setShuffle(formdata.get("shuffleCheckbox") === "shuffle" ? true : false);
-  //   setOperandConstraints({
-  //     min1: min1Value,
-  //     max1: max1Value,
-  //     min2: min2Value,
-  //     max2: max2Value,
-  //   });
-  //   setResultConstraints({ min: resultMinValue, max: resultMaxValue });
-  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -88,18 +58,10 @@ const ControlPanel = ({ state, stateSetters }) => {
           ? undefined
           : parseInt(formdata.get("resultMaxInput")),
     };
-    console.log("formPayload on creation/submit");
-    console.log(formPayload);
-
-    // const form = e.target;
-    // const formdata = new FormData(form);
 
     if (Validation.validate(formPayload)) {
       submitToState(formPayload);
     }
-    // if (Validation.validate(operationsInternalState, form, formdata)) {
-    //   submitToState(form, formdata);
-    // }
   };
 
   return (

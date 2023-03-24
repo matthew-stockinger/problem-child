@@ -111,10 +111,10 @@ const setOperandConstraintsValidity = (formPayload) => {
   );
 };
 
+// 0. if both fields are empty, skip this.
 // 1. result min must be < max.
 // 2. result min cannot be > highest possible result.
 // 3. result max cannot be < lowest possible result.
-// 4. if input is empty, set state.resultMin/Max to undefined.
 // return {bool} - did result constraints validate?
 const setResultConstraintsValidity = (formPayload) => {
   const resultMinInputElt = formPayload.form.querySelector("#resultMinInput");
@@ -122,6 +122,11 @@ const setResultConstraintsValidity = (formPayload) => {
 
   setValidityStateAndMessage(resultMinInputElt, "");
   setValidityStateAndMessage(resultMaxInputElt, "");
+
+  // empty check
+  if (!formPayload.resultMinValue && !formPayload.resultMaxValue) {
+    return true;
+  }
 
   // no decimals allowed (step="1")
   if (resultMinInputElt.validity.stepMismatch) {
