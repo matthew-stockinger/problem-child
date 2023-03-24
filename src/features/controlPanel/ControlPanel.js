@@ -35,7 +35,7 @@ const ControlPanel = ({ state, stateSetters }) => {
     const form = e.target;
     const formdata = new FormData(form);
 
-    if (Validation.validate(form, formdata)) {
+    if (Validation.validate(operationsInternalState, form, formdata)) {
       submitToState(formdata);
     }
   };

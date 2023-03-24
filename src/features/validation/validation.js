@@ -1,7 +1,26 @@
-export const validate = (form, formdata) => {
+export const validate = (operationsInternalState, form, formdata) => {
+  const operationsValidity = setOperationsValidity(
+    operationsInternalState,
+    form
+  );
+  console.log(operationsValidity);
   const numberOfProblemsValidity = setNumberOfProblemsValidity(form, formdata);
   const constraintsValidity = setConstraintsValidity(form, formdata);
-  return numberOfProblemsValidity && constraintsValidity;
+  return operationsValidity && numberOfProblemsValidity && constraintsValidity;
+};
+
+const setOperationsValidity = (operationsInternalState, form) => {
+  const operationsInputElt = form.querySelector("#operationsInput");
+  if (operationsInternalState.length <= 0) {
+    setValidityStateAndMessage(
+      operationsInputElt,
+      "Please select one or more operations."
+    );
+    return false;
+  } else {
+    setValidityStateAndMessage(operationsInputElt, "");
+    return true;
+  }
 };
 
 // number of problems must be between 6 and 100.

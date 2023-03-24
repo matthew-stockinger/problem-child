@@ -97,6 +97,8 @@ const Operations = ({
             </div>
           </div>
         </fieldset>
+        <input id="operationsInput" className="d-none"></input>
+        <p className="invalid-feedback text-center"></p>
       </div>
     </div>
   );
