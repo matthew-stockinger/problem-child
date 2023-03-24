@@ -20,45 +20,86 @@ const ControlPanel = ({ state, stateSetters }) => {
     setShuffle,
   } = stateSetters;
 
-  const submitToState = (formdata) => {
-    const [
-      numProbsValue,
-      min1Value,
-      max1Value,
-      min2Value,
-      max2Value,
-      resultMinValue,
-      resultMaxValue,
-    ] = [
-      parseInt(formdata.get("numberOfProblemsInput")),
-      parseInt(formdata.get("operand1MinInput")),
-      parseInt(formdata.get("operand1MaxInput")),
-      parseInt(formdata.get("operand2MinInput")),
-      parseInt(formdata.get("operand2MaxInput")),
-      parseInt(formdata.get("resultMinInput")),
-      parseInt(formdata.get("resultMaxInput")),
-    ];
-
-    setOperations(operationsInternalState);
-    setNumberOfProblems(numProbsValue);
-    setShuffle(formdata.get("shuffleCheckbox") === "shuffle" ? true : false);
+  const submitToState = (formPayload) => {
+    setOperations(formPayload.operationsValue);
+    setNumberOfProblems(formPayload.numProbsValue);
+    setShuffle(formPayload.shuffleValue);
     setOperandConstraints({
-      min1: min1Value,
-      max1: max1Value,
-      min2: min2Value,
-      max2: max2Value,
+      min1: formPayload.min1Value,
+      max1: formPayload.max1Value,
+      min2: formPayload.min2Value,
+      max2: formPayload.max2Value,
     });
-    setResultConstraints({ min: resultMinValue, max: resultMaxValue });
+    setResultConstraints({
+      min: formPayload.resultMinValue,
+      max: formPayload.resultMaxValue,
+    });
   };
+  // const submitToState = (formdata) => {
+  //   const [
+  //     numProbsValue,
+  //     min1Value,
+  //     max1Value,
+  //     min2Value,
+  //     max2Value,
+  //     resultMinValue,
+  //     resultMaxValue,
+  //   ] = [
+  //     parseInt(formdata.get("numberOfProblemsInput")),
+  //     parseInt(formdata.get("operand1MinInput")),
+  //     parseInt(formdata.get("operand1MaxInput")),
+  //     parseInt(formdata.get("operand2MinInput")),
+  //     parseInt(formdata.get("operand2MaxInput")),
+  //     parseInt(formdata.get("resultMinInput")),
+  //     parseInt(formdata.get("resultMaxInput")),
+  //   ];
+
+  //   setOperations(operationsInternalState);
+  //   setNumberOfProblems(numProbsValue);
+  //   setShuffle(formdata.get("shuffleCheckbox") === "shuffle" ? true : false);
+  //   setOperandConstraints({
+  //     min1: min1Value,
+  //     max1: max1Value,
+  //     min2: min2Value,
+  //     max2: max2Value,
+  //   });
+  //   setResultConstraints({ min: resultMinValue, max: resultMaxValue });
+  // };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const form = e.target;
-    const formdata = new FormData(form);
+    const formdata = new FormData(e.target);
+    const formPayload = {
+      form: e.target,
+      operationsValue: operationsInternalState,
+      numProbsValue: parseInt(formdata.get("numberOfProblemsInput")),
+      shuffleValue:
+        formdata.get("shuffleCheckbox") === "shuffle" ? true : false,
+      min1Value: parseInt(formdata.get("operand1MinInput")),
+      max1Value: parseInt(formdata.get("operand1MaxInput")),
+      min2Value: parseInt(formdata.get("operand2MinInput")),
+      max2Value: parseInt(formdata.get("operand2MaxInput")),
+      resultMinValue:
+        formdata.get("resultMinInput") === ""
+          ? undefined
+          : parseInt(formdata.get("resultMinInput")),
+      resultMaxValue:
+        formdata.get("resultMaxInput") === ""
+          ? undefined
+          : parseInt(formdata.get("resultMaxInput")),
+    };
+    console.log("formPayload on creation/submit");
+    console.log(formPayload);
 
-    if (Validation.validate(operationsInternalState, form, formdata)) {
-      submitToState(formdata);
+    // const form = e.target;
+    // const formdata = new FormData(form);
+
+    if (Validation.validate(formPayload)) {
+      submitToState(formPayload);
     }
+    // if (Validation.validate(operationsInternalState, form, formdata)) {
+    //   submitToState(form, formdata);
+    // }
   };
 
   return (

@@ -1,3 +1,13 @@
+- refactor validation: validate should be sent all of its information in one object.
+
+```
+{
+  form: form,
+  formdata: formdata,
+  operationsInternalState: operationsInternalState
+}
+```
+
 - bug: certain valid scenarios still cause infinite loops.
   - e.g.: operand1 constrained to 8. operand2 10 to 20. result constrained to 15.
   - probably need some sort of sensing in the problems view loop? or maybe put that into a new method willConverge of validation.

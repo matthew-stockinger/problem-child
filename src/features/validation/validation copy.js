@@ -1,13 +1,17 @@
-export const validate = (formPayload) => {
-  const operationsValidity = setOperationsValidity(formPayload);
-  const numberOfProblemsValidity = setNumberOfProblemsValidity(formPayload);
-  const constraintsValidity = setConstraintsValidity(formPayload);
+export const validate = (operationsInternalState, form, formdata) => {
+  const operationsValidity = setOperationsValidity(
+    operationsInternalState,
+    form
+  );
+  console.log(operationsValidity);
+  const numberOfProblemsValidity = setNumberOfProblemsValidity(form, formdata);
+  const constraintsValidity = setConstraintsValidity(form, formdata);
   return operationsValidity && numberOfProblemsValidity && constraintsValidity;
 };
 
-const setOperationsValidity = ({ form, operationsValue }) => {
+const setOperationsValidity = (operationsInternalState, form) => {
   const operationsInputElt = form.querySelector("#operationsInput");
-  if (operationsValue.length <= 0) {
+  if (operationsInternalState.length <= 0) {
     setValidityStateAndMessage(
       operationsInputElt,
       "Please select one or more operations."
@@ -22,7 +26,8 @@ const setOperationsValidity = ({ form, operationsValue }) => {
 // number of problems must be between 6 and 100.
 // setCustomValidity of input element and display invalid feedback if needed.
 // return {bool} - did number of problems validate?
-const setNumberOfProblemsValidity = ({ form, numProbsValue }) => {
+const setNumberOfProblemsValidity = (form, formdata) => {
+  const numProbsValue = parseInt(formdata.get("numberOfProblemsInput"));
   const numProbsInputElt = form.querySelector("#numberOfProblemsInput");
 
   if (numProbsValue < 6) {
@@ -47,9 +52,9 @@ const setNumberOfProblemsValidity = ({ form, numProbsValue }) => {
 
 // check operand constraints and result constraints.
 // return {bool} - did all constraints validate?
-const setConstraintsValidity = (formPayload) => {
-  const operandValidity = setOperandConstraintsValidity(formPayload);
-  const resultValidity = setResultConstraintsValidity(formPayload);
+const setConstraintsValidity = (form, formdata) => {
+  const operandValidity = setOperandConstraintsValidity(form, formdata);
+  const resultValidity = setResultConstraintsValidity(form, formdata);
 
   return operandValidity && resultValidity;
 };
@@ -57,18 +62,23 @@ const setConstraintsValidity = (formPayload) => {
 // operand mins must be less than max.
 // if not, setCustomValidity and display error feedback.
 // return {bool} - did the operand constraints validate?
-const setOperandConstraintsValidity = (formPayload) => {
-  const min1InputElt = formPayload.form.querySelector("#operand1MinInput");
-  const max1InputElt = formPayload.form.querySelector("#operand1MaxInput");
-  const min2InputElt = formPayload.form.querySelector("#operand2MinInput");
-  const max2InputElt = formPayload.form.querySelector("#operand2MaxInput");
+const setOperandConstraintsValidity = (form, formdata) => {
+  const min1InputElt = form.querySelector("#operand1MinInput");
+  const max1InputElt = form.querySelector("#operand1MaxInput");
+  const min2InputElt = form.querySelector("#operand2MinInput");
+  const max2InputElt = form.querySelector("#operand2MaxInput");
 
   setValidityStateAndMessage(min1InputElt, "");
   setValidityStateAndMessage(max1InputElt, "");
   setValidityStateAndMessage(min2InputElt, "");
   setValidityStateAndMessage(max2InputElt, "");
 
-  if (formPayload.min1Value > formPayload.max1Value) {
+  const min1 = parseInt(formdata.get("operand1MinInput"));
+  const max1 = parseInt(formdata.get("operand1MaxInput"));
+  const min2 = parseInt(formdata.get("operand2MinInput"));
+  const max2 = parseInt(formdata.get("operand2MaxInput"));
+
+  if (min1 > max1) {
     setValidityStateAndMessage(
       min1InputElt,
       "Minimum must be less than or equal to maximum."
@@ -79,7 +89,7 @@ const setOperandConstraintsValidity = (formPayload) => {
     );
   }
 
-  if (formPayload.min2Value > formPayload.max2Value) {
+  if (min2 > max2) {
     setValidityStateAndMessage(
       min2InputElt,
       "Minimum must be less than or equal to maximum."
@@ -116,12 +126,15 @@ const setOperandConstraintsValidity = (formPayload) => {
 // 3. result max cannot be < lowest possible result.
 // 4. if input is empty, set state.resultMin/Max to undefined.
 // return {bool} - did result constraints validate?
-const setResultConstraintsValidity = (formPayload) => {
-  const resultMinInputElt = formPayload.form.querySelector("#resultMinInput");
-  const resultMaxInputElt = formPayload.form.querySelector("#resultMaxInput");
+const setResultConstraintsValidity = (form, formdata) => {
+  const resultMinInputElt = form.querySelector("#resultMinInput");
+  const resultMaxInputElt = form.querySelector("#resultMaxInput");
 
   setValidityStateAndMessage(resultMinInputElt, "");
   setValidityStateAndMessage(resultMaxInputElt, "");
+
+  const resultMinValue = parseInt(formdata.get("resultMinInput"));
+  const resultMaxValue = parseInt(formdata.get("resultMaxInput"));
 
   // no decimals allowed (step="1")
   if (resultMinInputElt.validity.stepMismatch) {
@@ -138,7 +151,7 @@ const setResultConstraintsValidity = (formPayload) => {
   }
 
   // require: min < max
-  if (formPayload.resultMinValue > formPayload.resultMaxValue) {
+  if (resultMinValue > resultMaxValue) {
     setValidityStateAndMessage(
       resultMinInputElt,
       "Minimum must be less than or equal to maximum."
@@ -150,13 +163,13 @@ const setResultConstraintsValidity = (formPayload) => {
   }
 
   // check for imposible results constraints at extremities
-  if (formPayload.resultMinValue > extremeResult(formPayload, Math.max)) {
+  if (resultMinValue > extremeResult(formdata, Math.max)) {
     setValidityStateAndMessage(
       resultMinInputElt,
       "Minimum result exceeds highest possible result."
     );
   }
-  if (formPayload.resultMaxValue < extremeResult(formPayload, Math.min)) {
+  if (resultMaxValue < extremeResult(formdata, Math.min)) {
     setValidityStateAndMessage(
       resultMaxInputElt,
       "Maximum is lower than lowest possible result."
@@ -164,7 +177,7 @@ const setResultConstraintsValidity = (formPayload) => {
   }
 
   // check for impossible results constraints in the middle of operand ranges
-  if (!resultsWillConverge(formPayload)) {
+  if (!resultsWillConverge(formdata)) {
     setValidityStateAndMessage(
       resultMinInputElt,
       "No solution possible with these constraints."
@@ -179,19 +192,19 @@ const setResultConstraintsValidity = (formPayload) => {
 };
 
 // finds the highest or lowest possible result, checking all active operations
-// formPayload {object}
-// extremityFn {function} - either Math.max or Math.min
+// formdata {FormData}
+// extremityFn {Function} - either Math.max or Math.min
 // return {number}
-export const extremeResult = (formPayload, extremityFn) => {
+export const extremeResult = (formdata, extremityFn) => {
   const operations = ["+", "-", "*", "/"];
   let extremeResult;
 
   if (operations.includes("+")) {
-    extremeResult = extremeResultByOperation(formPayload, extremityFn, add);
+    extremeResult = extremeResultByOperation(formdata, extremityFn, add);
   }
   if (operations.includes("-")) {
     const subtractionExtreme = extremeResultByOperation(
-      formPayload,
+      formdata,
       extremityFn,
       subtract
     );
@@ -201,7 +214,7 @@ export const extremeResult = (formPayload, extremityFn) => {
   }
   if (operations.includes("*")) {
     const multiplicationExtreme = extremeResultByOperation(
-      formPayload,
+      formdata,
       extremityFn,
       multiply
     );
@@ -211,7 +224,7 @@ export const extremeResult = (formPayload, extremityFn) => {
   }
   if (operations.includes("/")) {
     const divisionExtreme = extremeResultByOperation(
-      formPayload,
+      formdata,
       extremityFn,
       divide
     );
@@ -223,63 +236,66 @@ export const extremeResult = (formPayload, extremityFn) => {
   return extremeResult;
 };
 
-// formPayload {object}
+// formdata {FormData}
 // extremityFn {Function} - either Math.min or Math.max
 // operationFn {Function} - add, subtract, multiply, or divide
 export const extremeResultByOperation = (
-  formPayload,
+  formdata,
   extremityFn,
   operationFn
 ) => {
-  const { min1Value, max1Value, min2Value, max2Value } = formPayload;
+  const operand1MinValue = parseInt(formdata.get("operand1MinInput"));
+  const operand1MaxValue = parseInt(formdata.get("operand1MaxInput"));
+  const operand2MinValue = parseInt(formdata.get("operand2MinInput"));
+  const operand2MaxValue = parseInt(formdata.get("operand2MaxInput"));
 
   if ([add, subtract, multiply].includes(operationFn)) {
     // operands could be shuffled in ProblemsView. need all permutations
     return extremityFn(
-      operationFn(min1Value, min2Value),
-      operationFn(min1Value, max2Value),
-      operationFn(max1Value, min2Value),
-      operationFn(max1Value, max2Value),
-      operationFn(min2Value, min1Value),
-      operationFn(min2Value, max1Value),
-      operationFn(max2Value, min1Value),
-      operationFn(max2Value, max1Value)
+      operationFn(operand1MinValue, operand2MinValue),
+      operationFn(operand1MinValue, operand2MaxValue),
+      operationFn(operand1MaxValue, operand2MinValue),
+      operationFn(operand1MaxValue, operand2MaxValue),
+      operationFn(operand2MinValue, operand1MinValue),
+      operationFn(operand2MinValue, operand1MaxValue),
+      operationFn(operand2MaxValue, operand1MinValue),
+      operationFn(operand2MaxValue, operand1MaxValue)
     );
   } else if (operationFn === divide) {
-    let operand1Denominators = [min1Value, max1Value];
-    if (min1Value < 0 && max1Value > 0) {
+    let operand1Denominators = [operand1MinValue, operand1MaxValue];
+    if (operand1MinValue < 0 && operand1MaxValue > 0) {
       operand1Denominators.push(-1, 1);
     }
-    if (min1Value === 0) {
+    if (operand1MinValue === 0) {
       operand1Denominators[0] = 1;
     }
-    if (max1Value === 0) {
+    if (operand1MaxValue === 0) {
       operand1Denominators[1] = -1;
     }
 
-    let operand2Denominators = [min2Value, max2Value];
-    if (min2Value < 0 && max2Value > 0) {
+    let operand2Denominators = [operand2MinValue, operand2MaxValue];
+    if (operand2MinValue < 0 && operand2MaxValue > 0) {
       operand2Denominators.push(-1, 1);
     }
-    if (min2Value === 0) {
+    if (operand2MinValue === 0) {
       operand2Denominators[0] = 1;
     }
-    if (max2Value === 0) {
+    if (operand2MaxValue === 0) {
       operand2Denominators[1] = -1;
     }
 
     return extremityFn(
       ...operand2Denominators.map((operand2Denominator) =>
-        operationFn(min1Value, operand2Denominator)
+        operationFn(operand1MinValue, operand2Denominator)
       ),
       ...operand2Denominators.map((operand2Denominator) =>
-        operationFn(max1Value, operand2Denominator)
+        operationFn(operand1MaxValue, operand2Denominator)
       ),
       ...operand1Denominators.map((operand1Denominator) =>
-        operationFn(min2Value, operand1Denominator)
+        operationFn(operand2MinValue, operand1Denominator)
       ),
       ...operand1Denominators.map((operand1Denominator) =>
-        operationFn(max2Value, operand1Denominator)
+        operationFn(operand2MaxValue, operand1Denominator)
       )
     );
   } else {
@@ -291,11 +307,11 @@ export const extremeResultByOperation = (
 // e.g. multiplication only, op1 = 0 to 10, op2 = 5, resultMin and resultMax = 8
 // the result constraints are within the extremities, but there's not way to get 8
 // from these constraints.
-export const resultsWillConverge = (formPayload) => {
+export const resultsWillConverge = (formdata) => {
   // loop through all possible problems
 
   // at each problem, if result in resultsRange, return true.
-  return true;
+  return false;
 };
 
 export const add = (a, b) => a + b;

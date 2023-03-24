@@ -1,32 +1,49 @@
 import { extremeResultByOperation, extremeResult } from "./validation";
 import { add, subtract, multiply, divide } from "./validation";
 
-const fdPosPos = new FormData(); // 1 to 10, 1 to 10
-const fdZeroPos = new FormData(); // 0 to 10, 1 to 10
-const fdNegPos = new FormData(); // -10 to 10, 1 to 10
-const fdNegZero = new FormData(); // -10 to 0, 1 to 10
-const fdNegNeg = new FormData(); // -10 to -1, 1 to 10
+const fdPosPos = {
+  min1Value: 1,
+  max1Value: 10,
+  min2Value: 1,
+  max2Value: 10,
+};
+const fdZeroPos = {
+  ...fdPosPos,
+  min1Value: 0,
+};
+const fdNegPos = {
+  ...fdPosPos,
+  min1Value: -10,
+};
+const fdNegZero = {
+  ...fdNegPos,
+  max1Value: 0,
+};
+const fdNegNeg = {
+  ...fdNegZero,
+  max1Value: -1,
+};
 
-fdPosPos.append("operand1MinInput", "1");
-fdPosPos.append("operand1MaxInput", "10");
-fdPosPos.append("operand2MinInput", "1");
-fdPosPos.append("operand2MaxInput", "10");
-fdZeroPos.append("operand1MinInput", "0");
-fdZeroPos.append("operand1MaxInput", "10");
-fdZeroPos.append("operand2MinInput", "1");
-fdZeroPos.append("operand2MaxInput", "10");
-fdNegPos.append("operand1MinInput", "-10");
-fdNegPos.append("operand1MaxInput", "10");
-fdNegPos.append("operand2MinInput", "1");
-fdNegPos.append("operand2MaxInput", "10");
-fdNegZero.append("operand1MinInput", "-10");
-fdNegZero.append("operand1MaxInput", "0");
-fdNegZero.append("operand2MinInput", "1");
-fdNegZero.append("operand2MaxInput", "10");
-fdNegNeg.append("operand1MinInput", "-10");
-fdNegNeg.append("operand1MaxInput", "-1");
-fdNegNeg.append("operand2MinInput", "1");
-fdNegNeg.append("operand2MaxInput", "10");
+// fdPosPos.append("operand1MinInput", "1");
+// fdPosPos.append("operand1MaxInput", "10");
+// fdPosPos.append("operand2MinInput", "1");
+// fdPosPos.append("operand2MaxInput", "10");
+// fdZeroPos.append("operand1MinInput", "0");
+// fdZeroPos.append("operand1MaxInput", "10");
+// fdZeroPos.append("operand2MinInput", "1");
+// fdZeroPos.append("operand2MaxInput", "10");
+// fdNegPos.append("operand1MinInput", "-10");
+// fdNegPos.append("operand1MaxInput", "10");
+// fdNegPos.append("operand2MinInput", "1");
+// fdNegPos.append("operand2MaxInput", "10");
+// fdNegZero.append("operand1MinInput", "-10");
+// fdNegZero.append("operand1MaxInput", "0");
+// fdNegZero.append("operand2MinInput", "1");
+// fdNegZero.append("operand2MaxInput", "10");
+// fdNegNeg.append("operand1MinInput", "-10");
+// fdNegNeg.append("operand1MaxInput", "-1");
+// fdNegNeg.append("operand2MinInput", "1");
+// fdNegNeg.append("operand2MaxInput", "10");
 
 it("finds minimum by addition", () => {
   expect(extremeResultByOperation(fdPosPos, Math.min, add)).toEqual(2);
@@ -90,32 +107,51 @@ it("finds maximum by division", () => {
 
 //////////////////////////////////////////
 
-const fdPosPosNegPos = new FormData(); // 1 to 10, -10 to 10
-const fdZeroPosNegPos = new FormData(); // 0 to 10, -10 to 10
-const fdNegPosNegPos = new FormData(); // -10 to 10, -10 to 10
-const fdNegZeroNegPos = new FormData(); // -10 to 0, -10 to 10
-const fdNegNegNegPos = new FormData(); // -10 to -1, -10 to 10
+const fdPosPosNegPos = {
+  min1Value: 1,
+  max1Value: 10,
+  min2Value: -10,
+  max2Value: 10,
+};
+const fdZeroPosNegPos = {
+  ...fdPosPosNegPos,
+  min1Value: 0,
+};
+const fdNegPosNegPos = {
+  ...fdPosPosNegPos,
+  min1Value: -10,
+}; // -10 to 10, -10 to 10
+const fdNegZeroNegPos = {
+  ...fdPosPosNegPos,
+  min1Value: -10,
+  max1Value: 0,
+}; // -10 to 0, -10 to 10
+const fdNegNegNegPos = {
+  ...fdPosPosNegPos,
+  min1Value: -10,
+  max1Value: -1,
+}; // -10 to -1, -10 to 10
 
-fdPosPosNegPos.append("operand1MinInput", "1");
-fdPosPosNegPos.append("operand1MaxInput", "10");
-fdPosPosNegPos.append("operand2MinInput", "-10");
-fdPosPosNegPos.append("operand2MaxInput", "10");
-fdZeroPosNegPos.append("operand1MinInput", "0");
-fdZeroPosNegPos.append("operand1MaxInput", "10");
-fdZeroPosNegPos.append("operand2MinInput", "-10");
-fdZeroPosNegPos.append("operand2MaxInput", "10");
-fdNegPosNegPos.append("operand1MinInput", "-10");
-fdNegPosNegPos.append("operand1MaxInput", "10");
-fdNegPosNegPos.append("operand2MinInput", "-10");
-fdNegPosNegPos.append("operand2MaxInput", "10");
-fdNegZeroNegPos.append("operand1MinInput", "-10");
-fdNegZeroNegPos.append("operand1MaxInput", "0");
-fdNegZeroNegPos.append("operand2MinInput", "-10");
-fdNegZeroNegPos.append("operand2MaxInput", "10");
-fdNegNegNegPos.append("operand1MinInput", "-10");
-fdNegNegNegPos.append("operand1MaxInput", "-1");
-fdNegNegNegPos.append("operand2MinInput", "-10");
-fdNegNegNegPos.append("operand2MaxInput", "10");
+// fdPosPosNegPos.append("operand1MinInput", "1");
+// fdPosPosNegPos.append("operand1MaxInput", "10");
+// fdPosPosNegPos.append("operand2MinInput", "-10");
+// fdPosPosNegPos.append("operand2MaxInput", "10");
+// fdZeroPosNegPos.append("operand1MinInput", "0");
+// fdZeroPosNegPos.append("operand1MaxInput", "10");
+// fdZeroPosNegPos.append("operand2MinInput", "-10");
+// fdZeroPosNegPos.append("operand2MaxInput", "10");
+// fdNegPosNegPos.append("operand1MinInput", "-10");
+// fdNegPosNegPos.append("operand1MaxInput", "10");
+// fdNegPosNegPos.append("operand2MinInput", "-10");
+// fdNegPosNegPos.append("operand2MaxInput", "10");
+// fdNegZeroNegPos.append("operand1MinInput", "-10");
+// fdNegZeroNegPos.append("operand1MaxInput", "0");
+// fdNegZeroNegPos.append("operand2MinInput", "-10");
+// fdNegZeroNegPos.append("operand2MaxInput", "10");
+// fdNegNegNegPos.append("operand1MinInput", "-10");
+// fdNegNegNegPos.append("operand1MaxInput", "-1");
+// fdNegNegNegPos.append("operand2MinInput", "-10");
+// fdNegNegNegPos.append("operand2MaxInput", "10");
 
 it("finds minimum by addition", () => {
   expect(extremeResultByOperation(fdPosPosNegPos, Math.min, add)).toEqual(-9);
@@ -262,3 +298,6 @@ it("finds the maximum result from all operations", () => {
   expect(extremeResult(fdNegZeroNegPos, Math.max)).toEqual(100);
   expect(extremeResult(fdNegNegNegPos, Math.max)).toEqual(100);
 });
+
+///////////// resultsWillConverge /////////////////////
+// it("checks if resultsWillConverge")
