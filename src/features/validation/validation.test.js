@@ -24,27 +24,6 @@ const fdNegNeg = {
   max1Value: -1,
 };
 
-// fdPosPos.append("operand1MinInput", "1");
-// fdPosPos.append("operand1MaxInput", "10");
-// fdPosPos.append("operand2MinInput", "1");
-// fdPosPos.append("operand2MaxInput", "10");
-// fdZeroPos.append("operand1MinInput", "0");
-// fdZeroPos.append("operand1MaxInput", "10");
-// fdZeroPos.append("operand2MinInput", "1");
-// fdZeroPos.append("operand2MaxInput", "10");
-// fdNegPos.append("operand1MinInput", "-10");
-// fdNegPos.append("operand1MaxInput", "10");
-// fdNegPos.append("operand2MinInput", "1");
-// fdNegPos.append("operand2MaxInput", "10");
-// fdNegZero.append("operand1MinInput", "-10");
-// fdNegZero.append("operand1MaxInput", "0");
-// fdNegZero.append("operand2MinInput", "1");
-// fdNegZero.append("operand2MaxInput", "10");
-// fdNegNeg.append("operand1MinInput", "-10");
-// fdNegNeg.append("operand1MaxInput", "-1");
-// fdNegNeg.append("operand2MinInput", "1");
-// fdNegNeg.append("operand2MaxInput", "10");
-
 it("finds minimum by addition", () => {
   expect(extremeResultByOperation(fdPosPos, Math.min, add)).toEqual(2);
   expect(extremeResultByOperation(fdZeroPos, Math.min, add)).toEqual(1);
@@ -131,27 +110,6 @@ const fdNegNegNegPos = {
   min1Value: -10,
   max1Value: -1,
 }; // -10 to -1, -10 to 10
-
-// fdPosPosNegPos.append("operand1MinInput", "1");
-// fdPosPosNegPos.append("operand1MaxInput", "10");
-// fdPosPosNegPos.append("operand2MinInput", "-10");
-// fdPosPosNegPos.append("operand2MaxInput", "10");
-// fdZeroPosNegPos.append("operand1MinInput", "0");
-// fdZeroPosNegPos.append("operand1MaxInput", "10");
-// fdZeroPosNegPos.append("operand2MinInput", "-10");
-// fdZeroPosNegPos.append("operand2MaxInput", "10");
-// fdNegPosNegPos.append("operand1MinInput", "-10");
-// fdNegPosNegPos.append("operand1MaxInput", "10");
-// fdNegPosNegPos.append("operand2MinInput", "-10");
-// fdNegPosNegPos.append("operand2MaxInput", "10");
-// fdNegZeroNegPos.append("operand1MinInput", "-10");
-// fdNegZeroNegPos.append("operand1MaxInput", "0");
-// fdNegZeroNegPos.append("operand2MinInput", "-10");
-// fdNegZeroNegPos.append("operand2MaxInput", "10");
-// fdNegNegNegPos.append("operand1MinInput", "-10");
-// fdNegNegNegPos.append("operand1MaxInput", "-1");
-// fdNegNegNegPos.append("operand2MinInput", "-10");
-// fdNegNegNegPos.append("operand2MaxInput", "10");
 
 it("finds minimum by addition", () => {
   expect(extremeResultByOperation(fdPosPosNegPos, Math.min, add)).toEqual(-9);
