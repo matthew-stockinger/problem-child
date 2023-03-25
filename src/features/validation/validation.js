@@ -175,7 +175,7 @@ const setResultConstraintsValidity = (formPayload) => {
       "No solution possible with these constraints."
     );
     setValidityStateAndMessage(
-      resultMinInputElt,
+      resultMaxInputElt,
       "No solution possible with these constraints."
     );
   }
@@ -297,10 +297,35 @@ export const extremeResultByOperation = (
 // the result constraints are within the extremities, but there's not way to get 8
 // from these constraints.
 export const resultsWillConverge = (formPayload) => {
-  // loop through all possible problems
-
-  // at each problem, if result in resultsRange, return true.
-  return true;
+  const opMap = {
+    "+": add,
+    "-": subtract,
+    "*": multiply,
+    "/": divide,
+  };
+  // loop through all possible problems from current formPayload.
+  for (let op1 = formPayload.min1Value; op1 <= formPayload.max1Value; op1++) {
+    for (let op2 = formPayload.min2Value; op2 <= formPayload.max2Value; op2++) {
+      for (const op of formPayload.operationsValue) {
+        // at each problem, if result in resultsRange, return true.
+        const result1 = opMap[op](op1, op2);
+        if (
+          result1 >= formPayload.resultMinValue &&
+          result1 <= formPayload.resultMaxValue
+        ) {
+          return true;
+        }
+        const result2 = opMap[op](op2, op1);
+        if (
+          result2 >= formPayload.resultMinValue &&
+          result2 <= formPayload.resultMaxValue
+        ) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
 };
 
 export const add = (a, b) => a + b;

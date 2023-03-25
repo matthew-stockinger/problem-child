@@ -1,5 +1,6 @@
 import { extremeResultByOperation, extremeResult } from "./validation";
 import { add, subtract, multiply, divide } from "./validation";
+import { resultsWillConverge } from "./validation";
 
 const fdPosPos = {
   min1Value: 1,
@@ -258,4 +259,50 @@ it("finds the maximum result from all operations", () => {
 });
 
 ///////////// resultsWillConverge /////////////////////
-// it("checks if resultsWillConverge")
+
+it("checks if resultsWillConverge", () => {
+  expect(
+    resultsWillConverge({
+      operationsValue: ["+"],
+      min1Value: 0,
+      max1Value: 10,
+      min2Value: 10,
+      max2Value: 20,
+      resultMinValue: 8,
+      resultMaxValue: 8,
+    })
+  ).toEqual(false);
+  expect(
+    resultsWillConverge({
+      operationsValue: ["+"],
+      min1Value: 0,
+      max1Value: 10,
+      min2Value: 10,
+      max2Value: 20,
+      resultMinValue: 15,
+      resultMaxValue: 15,
+    })
+  ).toEqual(true);
+  expect(
+    resultsWillConverge({
+      operationsValue: ["*"],
+      min1Value: 0,
+      max1Value: 20,
+      min2Value: 5,
+      max2Value: 5,
+      resultMinValue: 51,
+      resultMaxValue: 54,
+    })
+  ).toEqual(false);
+  expect(
+    resultsWillConverge({
+      operationsValue: ["*"],
+      min1Value: 0,
+      max1Value: 20,
+      min2Value: 5,
+      max2Value: 5,
+      resultMinValue: 96,
+      resultMaxValue: 104,
+    })
+  ).toEqual(true);
+});

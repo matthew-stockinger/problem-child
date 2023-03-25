@@ -1,6 +1,3 @@
-- bug: certain valid scenarios still cause infinite loops.
-  - e.g.: operand1 constrained to 8. operand2 10 to 20. result constrained to 15.
-  - probably need some sort of sensing in the problems view loop? or maybe put that into a new method willConverge of validation.
 - ControlPanel(?): add .was-validated only after submit.
 - validation.extremeResult: change operations assignment to use formdata.
 - ControlPanel.submitToState: finish all state submissions.
