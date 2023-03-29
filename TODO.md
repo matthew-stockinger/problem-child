@@ -1,4 +1,3 @@
-- validation.extremeResult: change operations assignment to use formdata.
 - ControlPanel.submitToState: finish all state submissions.
 - ControlPanel: add reset button to form.
 - eject Redux

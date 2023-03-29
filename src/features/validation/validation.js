@@ -188,7 +188,7 @@ const setResultConstraintsValidity = (formPayload) => {
 // extremityFn {function} - either Math.max or Math.min
 // return {number}
 export const extremeResult = (formPayload, extremityFn) => {
-  const operations = ["+", "-", "*", "/"];
+  const operations = formPayload.operationsValue;
   let extremeResult;
 
   if (operations.includes("+")) {
