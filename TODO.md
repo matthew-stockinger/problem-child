@@ -1,4 +1,3 @@
-- ControlPanel.submitToState: finish all state submissions.
 - ControlPanel: add reset button to form.
 - eject Redux
 - add CSS media query for printing.
