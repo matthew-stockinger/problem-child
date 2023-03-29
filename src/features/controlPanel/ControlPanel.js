@@ -59,6 +59,7 @@ const ControlPanel = ({ state, stateSetters }) => {
           : parseInt(formdata.get("resultMaxInput")),
     };
 
+    e.target.classList.add("was-validated");
     if (Validation.validate(formPayload)) {
       submitToState(formPayload);
     }
@@ -67,7 +68,7 @@ const ControlPanel = ({ state, stateSetters }) => {
   return (
     <div className="card">
       <div className="card-body">
-        <form onSubmit={handleSubmit} className="was-validated" noValidate>
+        <form onSubmit={handleSubmit} noValidate>
           <div className="row justify-content-center">
             <div className="col-md-9 col-lg-3">
               <div className="mb-3">
