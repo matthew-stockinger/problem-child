@@ -1,4 +1,3 @@
-- ControlPanel: add reset button to form.
 - eject Redux
 - add CSS media query for printing.
 - update README.md, LICENSE, CODE_OF_CONDUCT, CONTRIBUTING
