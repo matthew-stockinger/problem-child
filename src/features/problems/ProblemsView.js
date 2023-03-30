@@ -49,14 +49,6 @@ const Problem = ({ state }) => {
     }
   };
 
-  const getShuffledOperandsArray = ([operand1, operand2]) => {
-    if (Math.random() < 0.5) {
-      return [operand1, operand2];
-    } else {
-      return [operand2, operand1];
-    }
-  };
-
   // constraints.
   const [
     resultMin,
@@ -82,6 +74,9 @@ const Problem = ({ state }) => {
   do {
     var operand1 = getRandomIntInclusive(operand1Min, operand1Max);
     var operand2 = getRandomIntInclusive(operand2Min, operand2Max);
+    if (shuffle === true && Math.random() < 0.5) {
+      [operand1, operand2] = [operand2, operand1];
+    }
     var operation = operations[getRandomIntInclusive(0, operations.length - 1)];
     var result = evaluateProblem({
       operand1: operand1,
@@ -94,10 +89,6 @@ const Problem = ({ state }) => {
   );
 
   const operationChar = operationToStringFromCodePoint(operation);
-
-  if (shuffle === true) {
-    [operand1, operand2] = getShuffledOperandsArray([operand1, operand2]);
-  }
 
   return (
     <div className="col-md-2">
