@@ -118,12 +118,16 @@ const ProblemsView = ({ state }) => {
   const [printView, setPrintView] = useState(false);
 
   React.useEffect(() => {
-    const printMQL = window.matchMedia("print");
-    const handleMQLChange = (mql) => {
-      setPrintView(mql.matches);
+    const handleBeforePrint = () => setPrintView(true);
+    const handleAfterPrint = () => setPrintView(false);
+
+    window.addEventListener("beforeprint", handleBeforePrint);
+    window.addEventListener("afterprint", handleAfterPrint);
+
+    return () => {
+      window.removeEventListener("beforeprint", handleBeforePrint);
+      window.removeEventListener("afterprint", handleAfterPrint);
     };
-    printMQL.addEventListener("change", handleMQLChange);
-    return () => printMQL.removeEventListener("change", handleMQLChange);
   }, []);
   // end print preview stuff
 
