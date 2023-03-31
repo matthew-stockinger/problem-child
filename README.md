@@ -25,4 +25,6 @@ Program Iteration 3: Add a submit button to the form. This is where I went into 
 
 I didn't start this until near the end, so it is very incomplete.
 
+- 3.31.2023: removed Redux from the project. This turned out to be easy.
+- 3.31.2023: added contributing guidelines, code of conduct, and license to repo.
 - 3.30.2023: fixed a bug. User could enter result constraints, for example, that would require answers between 1 and 2, operands constrained to 2-4, shuffle on. Constraints were being tested before shuffle was applied, resulting in faulty output. Using the example here, 2 / 4 would sometimes show up (4 / 2 = 2, which meets the constraints, but then shuffle would randomly change some of these into 2 / 4, which doesn't meet criteria.) Now, shuffle is applied during problem generation, before result constraint checking.
