@@ -1,5 +1,3 @@
-- add CSS media query for printing.
-  - possible problem: firefox doesn't print the same.
 - fix browser tab title and icon
 - production build. Netlify?
 - add to portfolio site.
