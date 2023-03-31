@@ -1,3 +1,2 @@
-- fix browser tab title and icon
 - production build. Netlify?
 - add to portfolio site.

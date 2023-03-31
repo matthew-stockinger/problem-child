@@ -25,6 +25,7 @@ Program Iteration 3: Add a submit button to the form. This is where I went into 
 
 I didn't start this until near the end, so it is very incomplete.
 
+- 3.31.2023: added browser tab title and icon.
 - 3.31.2023: added CSS print queries. React made this tough! I worked for a long time following a method from MDN with which an event listener is added to a MediaQueryList. The listener triggers a component state change that removes some components from the page, and changes some classes to get it all formatted nicely. The trickiest bug ensued: the print preview was being sized before the layout classes were applied and the app was rerendered. The result was many, many blank pages in the print preview. After hours of trying many things, the solution was to abandon the event listener on the MediaQueryList and instead use a listener for window.beforeprint. This way, the component state change triggers the appropriate rendering _before_ going to print preview.
 - 3.31.2023: removed Redux from the project. This turned out to be easy.
 - 3.31.2023: added contributing guidelines, code of conduct, and license to repo.
