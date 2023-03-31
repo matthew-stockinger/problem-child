@@ -1,6 +1,7 @@
 import React from "react";
 import ProblemsView from "./features/problems/ProblemsView";
 import ControlPanel from "./features/controlPanel/ControlPanel";
+import "./App.css";
 
 const ProblemChild = () => {
   const [operations, setOperations] = React.useState(["+"]);
@@ -35,7 +36,9 @@ const ProblemChild = () => {
 
   return (
     <div className="container pt-4">
-      <ControlPanel state={state} stateSetters={stateSetters} />
+      <div className="print-hide">
+        <ControlPanel state={state} stateSetters={stateSetters} />
+      </div>
       <ProblemsView state={state} />
       {/* <Instructions /> */}
     </div>
