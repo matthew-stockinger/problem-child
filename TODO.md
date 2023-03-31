@@ -1,4 +1,5 @@
 - add CSS media query for printing.
+  - problem: printout is 5 pages long
 - fix browser tab title and icon
 - production build. Netlify?
 - add to portfolio site.

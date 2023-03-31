@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./problemsView.css";
 
-const Problem = ({ state }) => {
+const Problem = ({ state, printView }) => {
   // utility functions for generating the Problem
   const getRandomIntInclusive = (min, max) => {
     min = Math.ceil(min);
@@ -91,7 +91,7 @@ const Problem = ({ state }) => {
   const operationChar = operationToStringFromCodePoint(operation);
 
   return (
-    <div className="col-md-2">
+    <div className={printView ? "col-2" : "col-md-2"}>
       <div className="problemBox">
         <p className="h3 text-end">{operand1}</p>
         <p className="h3 text-end">
@@ -103,32 +103,52 @@ const Problem = ({ state }) => {
   );
 };
 
-const ProblemsRow = ({ state, numberInThisRow }) => {
+const ProblemsRow = ({ state, numberInThisRow, printView }) => {
   const problemIDs = Array(numberInThisRow)
     .fill(undefined)
     .map((elt) => crypto.randomUUID());
   const problemComponents = problemIDs.map((problemID) => (
-    <Problem key={problemID} state={state} />
+    <Problem key={problemID} state={state} printView={printView} />
   ));
   return <div className="row my-4">{problemComponents}</div>;
 };
 
 const ProblemsView = ({ state }) => {
+  // conditionally render Problem components differently for print
+  const [printView, setPrintView] = useState(false);
+
+  React.useEffect(() => {
+    const printMQL = window.matchMedia("print");
+    const handleMQLChange = (mql) => {
+      setPrintView(mql.matches);
+    };
+    printMQL.addEventListener("change", handleMQLChange);
+    return () => printMQL.removeEventListener("change", handleMQLChange);
+  }, []);
+  // end print preview stuff
+
   const numRows = Math.floor(state.numberOfProblems / 6);
   const numberOfProblemsInLastRow = state.numberOfProblems % 6;
   const rowIDs = Array(numRows)
     .fill(undefined)
     .map((elt) => crypto.randomUUID());
   const rowComponents = rowIDs.map((rowID, index) => (
-    <ProblemsRow key={rowID} state={state} numberInThisRow={6} />
+    <ProblemsRow
+      key={rowID}
+      state={state}
+      numberInThisRow={6}
+      printView={printView}
+    />
   ));
+
   return (
-    <div>
+    <div id="problems-container">
       {rowComponents}
       <ProblemsRow
         key={crypto.randomUUID()}
         state={state}
         numberInThisRow={numberOfProblemsInLastRow}
+        printView={printView}
       />
     </div>
   );

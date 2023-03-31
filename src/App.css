@@ -1,11 +1,15 @@
 @media only print {
-  /* ensures that dynamically added styles end up in print */
-  * {
-    -webkit-transition: none !important;
-    transition: none !important;
-  }
-
+  /* ensures that dynamically added styles end up in emulated print view */
   .print-hide {
     display: none;
   }
+
+  /* .container {
+    background-color: pink;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: 1px solid black;
+    outline: 1px dashed black;
+  } */
 }

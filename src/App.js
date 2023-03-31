@@ -39,7 +39,9 @@ const ProblemChild = () => {
       <div className="print-hide">
         <ControlPanel state={state} stateSetters={stateSetters} />
       </div>
-      <ProblemsView state={state} />
+      <div className="query-container">
+        <ProblemsView state={state} />
+      </div>
       {/* <Instructions /> */}
     </div>
   );
