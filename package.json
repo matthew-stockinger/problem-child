@@ -1,6 +1,6 @@
 {
-  "name": "problem-child",
-  "version": "0.1.0",
+  "name": "Elementary Math Worksheet Generator",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
