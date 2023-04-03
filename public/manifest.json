@@ -1,6 +1,6 @@
 {
-  "name": "Problem Child",
-  "short_name": "problemchild",
+  "name": "Elementary Math Worksheet Generator",
+  "short_name": "elem_math_ws_gen",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
