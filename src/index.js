@@ -7,7 +7,7 @@ import "./index.css";
 const container = document.getElementById("root");
 const root = createRoot(container);
 
-document.title = "Problem Child";
+document.title = "Elementary Math Worksheet Generator";
 
 root.render(
   <React.StrictMode>
